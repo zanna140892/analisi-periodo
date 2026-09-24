@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dividere un periodo in proposizioni</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .custom-card {
+            border-left: 4px solid #0284c7;
+        }
+        .exercise-card {
+            border-left: 4px solid #16a34a;
+        }
+        .highlight-predicate {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            font-weight: 600;
+            padding: 2px 4px;
+            border-radius: 4px;
+            border-bottom: 2px solid #0284c7;
+        }
+        .slash-marker {
+            color: #dc2626;
+            font-weight: bold;
+            font-size: 1.15rem;
+            cursor: pointer;
+            padding: 0 4px;
+            user-select: none;
+            transition: all 0.15s ease;
+        }
+        .slash-marker:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+
+    <div class="max-w-4xl mx-auto space-y-8">
+        
+        <!-- Main Guide Card -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-10 border border-slate-100 custom-card">
+            <h1 class="text-2xl sm:text-3xl font-bold text-sky-700 mb-4">Dividere un periodo in proposizioni</h1>
+            <p class="text-lg text-slate-700 mb-6 font-medium">Per fare l'analisi del periodo devi innanzitutto <span class="text-sky-800 font-bold">scomporre la frase complessa in proposizioni</span>.</p>
+
+            <div class="space-y-6 text-slate-700">
+                <!-- Step 1 -->
+                <div class="flex items-start gap-3">
+                    <span class="flex-shrink-0 w-8 h-8 rounded-full bg-sky-100 text-sky-700 font-bold flex items-center justify-center">1</span>
+                    <div>
+                        <p class="leading-relaxed">Per prima cosa, individua la <strong class="text-slate-900">fine dei periodi</strong>. Ricorda che il periodo è chiuso da un segno di punteggiatura forte. Metti due barrette alla fine di ogni periodo:</p>
+                        <div class="bg-slate-50 p-4 rounded-xl mt-3 border border-slate-200 font-mono text-sm sm:text-base text-sky-900">
+                            Marco è tornato tardi dal lavoro, oggi. // Ha fatto la doccia e ora si sta preparando per uscire, anche se è stanchissimo. //
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="flex items-start gap-3">
+                    <span class="flex-shrink-0 w-8 h-8 rounded-full bg-sky-100 text-sky-700 font-bold flex items-center justify-center">2</span>
+                    <div class="space-y-3 w-full">
+                        <p class="leading-relaxed">Poi <strong class="text-slate-900">sottolinea i predicati</strong> all'interno del periodo. Ricorda che:</p>
+                        <ul class="space-y-2 pl-2">
+                            <li class="flex items-start gap-2">
+                                <span class="text-red-500 font-bold mt-1">•</span>
+                                <div><strong class="text-slate-900">i predicati nominali</strong> sono formati dal verbo <em>essere</em> o da un verbo copulativo seguito da un nome o da un aggettivo (vedi pp. 16-18): <span class="italic text-slate-900">"Il cielo è sereno"; "Luca sembra triste";</span></div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-red-500 font-bold mt-1">•</span>
+                                <div class="space-y-2 w-full">
+                                    <span><strong class="text-slate-900">i predicati verbali</strong> possono essere costituiti da più verbi. In particolare costituiscono un sintagma unico e quindi un solo predicato verbale (vedi pp. 14-15):</span>
+                                    <ul class="space-y-1 pl-4 text-slate-600 list-disc">
+                                        <li>i verbi coniugati ai <strong class="text-slate-800">tempi composti</strong> (<span class="italic">sono andato, avevo mangiato, ero caduto</span>);</li>
+                                        <li>i verbi coniugati al <strong class="text-slate-800">passivo</strong> (<span class="italic">è visto, fu ritenuta, erano stati chiamati</span>);</li>
+                                        <li>i verbi servili con <strong class="text-slate-800">l'infinito</strong> (<span class="italic">possiamo andare, vorrei sapere, dovresti vedere</span>);</li>
+                                        <li>i verbi fraseologici con <strong class="text-slate-800">l'infinito o il gerundio</strong> (<span class="italic">sto per starnutire, comincio a scrivere, finisco di studiare, riesco a vedere, sto suonando</span>):</li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 font-mono text-sm sm:text-base">
+                            Marco <span class="highlight-predicate">è tornato</span> tardi dal lavoro, oggi. // Ha <span class="highlight-predicate">fatto</span> la doccia e ora si <span class="highlight-predicate">sta preparando</span> per <span class="highlight-predicate">uscire</span>, anche se <span class="highlight-predicate">è</span> stanchissimo. //
+                        </div>
+
+                        <div class="bg-sky-50/70 p-4 rounded-xl border border-sky-100 space-y-2 mt-4">
+                            <p class="font-bold text-sky-900">A ogni predicato evidenziato corrisponde una singola proposizione.</p>
+                            <div class="font-mono text-sm space-y-1 text-slate-700">
+                                <p>Marco <span class="text-sky-700 font-bold">è tornato</span> tardi dal lavoro, oggi. //</p>
+                                <p class="text-sky-800 font-medium">&rarr; il predicato è uno &rarr; c'è una sola proposizione</p>
+                                <p class="mt-2"><span class="text-sky-700 font-bold">Ha fatto</span> la doccia e ora si <span class="text-sky-700 font-bold">sta preparando</span> per <span class="text-sky-700 font-bold">uscire</span>, anche se <span class="text-sky-700 font-bold">è</span> stanchissimo. //</p>
+                                <p class="text-sky-800 font-medium">&rarr; i predicati sono quattro &rarr; ci sono quattro proposizioni</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="flex items-start gap-3">
+                    <span class="flex-shrink-0 w-8 h-8 rounded-full bg-sky-100 text-sky-700 font-bold flex items-center justify-center">3</span>
+                    <div>
+                        <p class="leading-relaxed">A questo punto <strong class="text-slate-900">separa le singole proposizioni</strong>, individuandone l'inizio e la fine: metti una barretta alla fine di ciascuna:</p>
+                        <div class="bg-slate-50 p-4 rounded-xl mt-3 border border-slate-200 font-mono text-sm sm:text-base text-slate-800">
+                            Marco <span class="text-sky-700 font-bold">è tornato</span> tardi dal lavoro, oggi. // Ha <span class="text-sky-700 font-bold">fatto</span> la doccia <span class="text-red-600 font-bold">/</span> e ora si <span class="text-sky-700 font-bold">sta preparando</span> <span class="text-red-600 font-bold">/</span> per <span class="text-sky-700 font-bold">uscire</span>, <span class="text-red-600 font-bold">/</span> anche se <span class="text-sky-700 font-bold">è</span> stanchissimo. //
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Exercise Section ("Verifichiamo subito") -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-10 border border-slate-100 exercise-card">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="bg-lime-600 text-white text-xs font-bold uppercase px-3 py-1.5 rounded-lg shadow-sm">Verifichiamo subito</span>
+            </div>
+            
+            <p class="text-base sm:text-lg font-semibold text-slate-800 mb-2">
+                Sottolinea i predicati, poi scomponi i seguenti periodi in proposizioni (metti le barrette).
+            </p>
+            <p class="text-xs sm:text-sm text-slate-500 mb-6 italic">
+                💡 <span class="font-medium">Istruzioni:</span> Clicca sulle parole per <strong class="text-sky-700">sottolineare i predicati</strong>. Clicca sui puntini rossi tra le parole per <strong class="text-red-600">inserire le barrette (/ o //)</strong>.
+            </p>
+
+            <!-- Example -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6 font-mono text-sm sm:text-base">
+                <span class="font-bold text-slate-900">Es.</span> Ho <span class="text-sky-700 font-bold">letto</span> più volte questo paragrafo, <span class="text-red-600 font-bold">/</span>ma non ho <span class="text-sky-700 font-bold">capito</span> nulla.
+            </div>
+
+            <!-- Exercises List -->
+            <div class="space-y-6" id="exercise-container"></div>
+
+            <div class="mt-8 flex flex-wrap gap-4 items-center justify-between pt-6 border-t border-slate-100">
+                <div class="flex gap-3">
+                    <button onclick="checkAnswers()" class="bg-lime-600 hover:bg-lime-700 text-white font-bold px-6 py-3 rounded-xl shadow-md transition-all duration-200 flex items-center gap-2">
+                        <span>Mostra Soluzioni</span>
+                    </button>
+                    <button onclick="resetExercise()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold px-5 py-3 rounded-xl transition-all duration-200">
+                        Riavvia
+                    </button>
+                </div>
+                <div id="feedback-msg" class="text-sm font-bold"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const exercises = [
+            {
+                id: 1,
+                text: "Vieni con noi o resti a casa?",
+                solutionHtml: "<span class='highlight-predicate'>Vieni</span> con noi o <span class='highlight-predicate'>resti</span> a casa?"
+            },
+            {
+                id: 2,
+                text: "Ho molto apprezzato il film che mi hai consigliato.",
+                solutionHtml: "Ho molto <span class='highlight-predicate'>apprezzato</span> il film <span class='slash-marker'>/</span> che mi <span class='highlight-predicate'>hai consigliato</span>."
+            },
+            {
+                id: 3,
+                text: "Elisa è uscita da scuola, ha pranzato da Chiara e poi è andata in piscina.",
+                solutionHtml: "Elisa <span class='highlight-predicate'>è uscita</span> da scuola, <span class='slash-marker'>/</span> ha <span class='highlight-predicate'>pranzato</span> da Chiara <span class='slash-marker'>/</span> e poi <span class='highlight-predicate'>è andata</span> in piscina."
+            },
+            {
+                id: 4,
+                text: "Prima di uscire, prendi il sacchetto dell'immondizia e buttalo nel cassonetto.",
+                solutionHtml: "Prima di <span class='highlight-predicate'>uscire</span>, <span class='slash-marker'>/</span> <span class='highlight-predicate'>prendi</span> il sacchetto dell'immondizia <span class='slash-marker'>/</span> e <span class='highlight-predicate'>buttalo</span> nel cassonetto."
+            },
+            {
+                id: 5,
+                text: "Siediti e aspettami: torno subito.",
+                solutionHtml: "<span class='highlight-predicate'>Siediti</span> <span class='slash-marker'>/</span> e <span class='highlight-predicate'>aspettami</span>: <span class='slash-marker'>//</span> <span class='highlight-predicate'>torno</span> subito."
+            },
+            {
+                id: 6,
+                text: "L'amica di Francy ha rovesciato una tazza di tè, ma per fortuna sul tavolo non c'era la tovaglia.",
+                solutionHtml: "L'amica di Francy <span class='highlight-predicate'>ha rovesciato</span> una tazza di tè, <span class='slash-marker'>/</span> ma per fortuna sul tavolo non <span class='highlight-predicate'>c'era</span> la tovaglia."
+            },
+            {
+                id: 7,
+                text: "Se ci rimane del tempo, andiamo a comprare anche le clavette per ginnastica ritmica.",
+                solutionHtml: "Se ci <span class='highlight-predicate'>rimane</span> del tempo, <span class='slash-marker'>/</span> <span class='highlight-predicate'>andiamo</span> a <span class='highlight-predicate'>comprare</span> anche le clavette per ginnastica ritmica."
+            },
+            {
+                id: 8,
+                text: "Pedro, David e Angela si sono trovati ieri pomeriggio per fare la ricerca di scienze: sono stati bravi, perché hanno lavorato bene senza disperdersi.",
+                solutionHtml: "Pedro, David e Angela si <span class='highlight-predicate'>sono trovati</span> ieri pomeriggio per <span class='highlight-predicate'>fare</span> la ricerca di scienze: <span class='slash-marker'>//</span> <span class='highlight-predicate'>sono stati</span> bravi, <span class='slash-marker'>/</span> perché <span class='highlight-predicate'>hanno lavorato</span> bene senza <span class='highlight-predicate'>disperdersi</span>."
+            }
+        ];
+
+        function renderExercises(showSolutions = false) {
+            const container = document.getElementById('exercise-container');
+            container.innerHTML = '';
+
+            exercises.forEach((ex) => {
+                const div = document.createElement('div');
+                div.className = "p-4 rounded-xl bg-slate-50 border border-slate-200 transition-all font-mono text-sm sm:text-base";
+                
+                let content = `<span class="font-bold text-slate-900 font-sans mr-2">${ex.id}.</span> `;
+                
+                if (showSolutions) {
+                    content += `<span class="text-slate-800">${ex.solutionHtml}</span>`;
+                } else {
+                    const words = ex.text.split(' ');
+                    content += `<div class="inline-flex flex-wrap items-center gap-y-2 mt-1 text-slate-800">`;
+                    words.forEach((word, wIdx) => {
+                        content += `<span onclick="toggleWord(this)" class="cursor-pointer px-1 py-0.5 rounded hover:bg-sky-100 transition-colors select-none">${word}</span>`;
+                        if (wIdx < words.length - 1) {
+                            content += `<span onclick="toggleSlash(this)" data-state="0" class="slash-marker inline-block px-1 text-slate-300 hover:text-red-500" title="Clicca per mettere la barretta">·</span>`;
+                        }
+                    });
+                    content += `</div>`;
+                }
+
+                div.innerHTML = content;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleWord(el) {
+            if (el.classList.contains('highlight-predicate')) {
+                el.classList.remove('highlight-predicate');
+                el.style.backgroundColor = '';
+                el.style.color = '';
+                el.style.fontWeight = '';
+                el.style.borderBottom = '';
+            } else {
+                el.classList.add('highlight-predicate');
+            }
+        }
+
+        function toggleSlash(el) {
+            let state = parseInt(el.getAttribute('data-state') || '0');
+            state = (state + 1) % 3; // 0: none, 1: /, 2: //
+            el.setAttribute('data-state', state);
+
+            if (state === 0) {
+                el.textContent = '·';
+                el.className = "slash-marker inline-block px-1 text-slate-300 hover:text-red-500";
+            } else if (state === 1) {
+                el.textContent = '/';
+                el.className = "slash-marker inline-block px-1 text-red-600 font-bold";
+            } else if (state === 2) {
+                el.textContent = '//';
+                el.className = "slash-marker inline-block px-1 text-red-600 font-bold";
+            }
+        }
+
+        function checkAnswers() {
+            renderExercises(true);
+            const msg = document.getElementById('feedback-msg');
+            msg.textContent = "Ecco le soluzioni complete con i predicati sottolineati e le barrette inserite!";
+            msg.className = "text-sm font-bold text-lime-700";
+        }
+
+        function resetExercise() {
+            renderExercises(false);
+            const msg = document.getElementById('feedback-msg');
+            msg.textContent = "";
+        }
+
+        renderExercises(false);
+    </script>
+</body>
+</html>
+```eof
