@@ -1,587 +1,895 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Reggenza e dipendenza</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:wght@600;700&display=swap">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Studio e ripasso dell'analisi del periodo: la proposizione principale, coordinazione e subordinazione.">
 <style>
-:root {
-  --ink: #1C1F23; --ink2: #2E3238; --muted: #4A4F57; --line: #D9D5CC; --paper: #F6F5F1; --bg: #FFFFFF;
-  --main-bg: #E3F3EF; --main-bd: #0F766E; --main-tx: #0B5F58;
-  --coord-bg: #EFE8FC; --coord-bd: #6D28D9; --coord-tx: #5B21B6;
-  --sub-bg: #FDECDF; --sub-bd: #C2410C; --sub-tx: #9A3412;
-  --display: "Bricolage Grotesque", system-ui, sans-serif;
-  --body: "Atkinson Hyperlegible", system-ui, sans-serif;
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>Principale e legami del periodo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Bricolage+Grotesque:wght@600;700;800&display=swap">
+<style>
+/* Pagina di studio: fascia di comando fissa in basso, una scena per passo, due capitoli. */
+:root{
+  --paper:#FFFFFF;
+  --card:#F6F5F1;
+  --ink:#1C1F23;
+  --ink-soft:#4A4F57;
+  --rule:#D9D5CC;
+  --main:#0F766E;      /* principale */
+  --main-bg:#E3F3EF;
+  --coord:#6D28D9;     /* coordinata */
+  --coord-bg:#EFE8FC;
+  --sub:#C2410C;       /* subordinata */
+  --sub-bg:#FDECDF;
+  --display:'Bricolage Grotesque', system-ui, sans-serif;
+  --body:'Atkinson Hyperlegible', system-ui, -apple-system, sans-serif;
   color-scheme: light;
 }
-* { box-sizing: border-box; }
-html { background: #EDEBE4; }
-body { margin: 0; font-family: var(--body); color: var(--ink); font-size: 15px; line-height: 1.4; }
-.app { max-width: 880px; margin: 0 auto; background: var(--bg); min-height: 100vh; padding: 28px 40px 56px; }
-h1, h2, h3 { font-family: var(--display); margin: 0; font-weight: 700; }
-p { margin: 0; }
-.eyebrow { font-size: 12px; line-height: 16px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-
-/* tabs */
-.tabs { display: flex; gap: 6px; margin: 0 0 22px; border-bottom: 2px solid var(--line); position: sticky; top: 0; background: var(--bg); padding-top: 6px; z-index: 5; }
-.tab { font: 700 15px/1 var(--body); color: var(--muted); background: none; border: 0; padding: 12px 16px; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; }
-.tab:hover { color: var(--ink); }
-.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
-.tab .new { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; background: var(--main-bd); color: #fff; border-radius: 999px; padding: 2px 7px; margin-left: 6px; vertical-align: 2px; }
-.tab:focus-visible, .pill:focus-visible, .btn:focus-visible, .chip:focus-visible, .switch input:focus-visible + span { outline: 3px solid #1C1F23; outline-offset: 2px; }
-[hidden] { display: none !important; }
-
-.stack { display: flex; flex-direction: column; gap: 12px; }
-.head { display: flex; flex-direction: column; gap: 6px; }
-.head h1 { font-size: 36px; line-height: 40px; }
-.head p { font-size: 15px; line-height: 21px; color: var(--ink2); }
-.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; padding-top: 4px; }
-.legend span { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; }
-.sw { width: 14px; height: 14px; border-radius: 4px; border: 2px solid; }
-.sw.main { background: var(--main-bg); border-color: var(--main-bd); }
-.sw.coord { background: var(--coord-bg); border-color: var(--coord-bd); }
-.sw.sub { background: var(--sub-bg); border-color: var(--sub-bd); }
-.sw.hook { width: 20px; height: 12px; border: 0; border-left: 2px solid var(--sub-bd); border-bottom: 2px solid var(--sub-bd); border-bottom-left-radius: 5px; border-radius: 0 0 0 5px; background: none; }
-.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.card { padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; font-size: 14px; line-height: 19px; }
-.sec { display: flex; flex-direction: column; gap: 8px; padding: 14px 18px; background: var(--paper); border-radius: 14px; }
-.sec h2 { font-size: 19px; line-height: 24px; }
-.sec > p, .cap { font-size: 14px; line-height: 20px; color: var(--ink2); }
-.ex-sentence { font-style: italic; }
-hr.rule { border: 0; height: 1px; background: var(--line); margin: 2px 0; width: 100%; }
-
-/* clause boxes (static diagrams) */
-.cl { display: inline-flex; flex-direction: column; gap: 2px; padding: 6px 12px; border: 2px solid; border-radius: 10px; flex: none; max-width: 100%; }
-.cl .lb { font-size: 11px; line-height: 14px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
-.cl .tx { font-size: 15px; line-height: 20px; }
-.cl.main, .chip.main { background: var(--main-bg); border-color: var(--main-bd); } .cl.main .lb, .chip.main .lb { color: var(--main-tx); }
-.cl.coord, .cl.subcoord-c, .chip.coord { background: var(--coord-bg); border-color: var(--coord-bd); } .cl.coord .lb, .chip.coord .lb { color: var(--coord-tx); }
-.cl.sub, .chip.sub, .chip.subcoord { background: var(--sub-bg); border-color: var(--sub-bd); } .cl.sub .lb, .chip.sub .lb, .chip.subcoord .lb { color: var(--sub-tx); }
-.cl.heavy { border-width: 3px; }
-.row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.row.hooked { align-items: flex-start; gap: 4px; flex-wrap: wrap; }
-.hk { flex: none; width: 20px; height: 34px; margin-top: -8px; border-left: 2px solid var(--sub-bd); border-bottom: 2px solid var(--sub-bd); border-bottom-left-radius: 8px; }
-.conn { flex: none; width: 28px; text-align: center; padding: 3px 0; border-radius: 999px; background: var(--coord-bd); color: #fff; font-size: 14px; line-height: 18px; font-weight: 700; }
-.row.hooked .conn { align-self: center; margin: 0 4px; }
-.col { display: flex; flex-direction: column; gap: 8px; }
-.dark { background: var(--ink); color: #fff; gap: 6px; padding: 16px 20px; }
-.dark h2 { font-size: 22px; line-height: 28px; color: #fff; }
-.dark .big { font-size: 17px; line-height: 24px; font-weight: 700; color: #fff; }
-.dark p:last-child { font-size: 14px; line-height: 20px; color: #E6E4DE; }
-.table { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
-.tr { display: grid; grid-template-columns: 116px minmax(0, 1fr) minmax(0, 1fr) 62px; gap: 12px; align-items: center; padding: 9px 14px; border-top: 1px solid var(--line); font-size: 14px; line-height: 19px; }
-.tr.th { background: var(--paper); border-top: 0; padding: 8px 14px; font-size: 12px; line-height: 16px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-.tr .t-sub { font-weight: 700; color: var(--sub-tx); } .tr .t-coord { font-weight: 700; color: var(--coord-tx); }
-.hl { padding: 1px 4px; border-radius: 4px; }
-.hl.s { background: var(--sub-bg); } .hl.c { background: var(--coord-bg); } .hl.m { background: var(--main-bg); }
-.yes, .no { justify-self: start; padding: 2px 10px; border-radius: 999px; color: #fff; font-weight: 700; }
-.yes { background: var(--main-bd); } .no { background: var(--ink); }
-.tn { padding: 7px 14px; border-top: 1px solid var(--line); font-size: 12px; line-height: 16px; color: var(--muted); }
-.note { display: flex; flex-direction: column; gap: 6px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 14px; }
-.note b { font-size: 15px; }
-.note .l { font-size: 14px; line-height: 22px; } .note .l i { font-style: normal; color: var(--muted); }
-.try { align-self: flex-start; }
-
-/* lab */
-.btn { font: 700 14px/1 var(--body); color: var(--ink); background: #fff; border: 2px solid var(--ink); border-radius: 10px; padding: 10px 14px; cursor: pointer; }
-.btn:hover { background: var(--paper); }
-.btn.primary { background: var(--ink); color: #fff; }
-.btn.primary:hover { background: #343a41; }
-.lab-top { display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
-.switch { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 14px; cursor: pointer; }
-.switch input { position: absolute; opacity: 0; }
-.switch span { width: 42px; height: 24px; border-radius: 999px; background: #B8B4AA; position: relative; transition: background .2s; flex: none; }
-.switch span::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: transform .2s; }
-.switch input:checked + span { background: var(--main-bd); }
-.switch input:checked + span::after { transform: translateX(18px); }
-.pills { display: flex; flex-wrap: wrap; gap: 8px; }
-.pill { font: 700 14px/1 var(--body); background: #fff; color: var(--ink); border: 2px solid var(--line); border-radius: 999px; padding: 9px 14px; cursor: pointer; display: inline-flex; gap: 8px; align-items: center; }
-.pill:hover { border-color: var(--ink); }
-.pill[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
-.pill .ck { width: 18px; height: 18px; border-radius: 50%; border: 2px solid currentColor; font-size: 11px; display: inline-flex; align-items: center; justify-content: center; opacity: .55; }
-.pill.done .ck { background: var(--main-bd); border-color: var(--main-bd); color: #fff; opacity: 1; }
-.work { display: flex; flex-direction: column; gap: 14px; padding: 18px; background: var(--paper); border-radius: 16px; }
-.work h2 { font-size: 22px; line-height: 28px; }
-.task { font-size: 15px; line-height: 21px; color: var(--ink2); }
-.tray { display: flex; flex-wrap: wrap; gap: 12px; padding: 22px 16px; min-height: 104px; background: #fff; border: 2px dashed #B8B4AA; border-radius: 14px; align-items: center; touch-action: none; }
-.chip { display: inline-flex; flex-direction: column; gap: 2px; padding: 8px 14px 8px 12px; border: 2px solid var(--muted); background: #fff; border-radius: 12px; cursor: grab; user-select: none; -webkit-user-select: none; position: relative; touch-action: none; transition: transform .18s, box-shadow .18s; max-width: 100%; }
-.chip .lb { font-size: 11px; line-height: 14px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; display: none; }
-.chip .tx { font-size: 17px; line-height: 22px; display: flex; gap: 8px; align-items: baseline; }
-.chip .tx::before { content: "⠿"; color: #8A8D93; font-size: 16px; }
-.roles-on .chip .lb { display: block; }
-.roles-off .chip { background: #fff; border-color: var(--muted); }
-.chip.drag { transition: none; cursor: grabbing; z-index: 10; box-shadow: 0 10px 24px rgba(0,0,0,.22); }
-.roles-on .chip.heavy-lb { border-width: 3px; }
-.sentence { font-size: 22px; line-height: 30px; font-family: var(--body); padding: 14px 18px; background: #fff; border-radius: 12px; border: 1px solid var(--line); min-height: 62px; }
-.sentence .star { color: var(--sub-bd); font-weight: 700; margin-right: 4px; }
-.verdict { display: flex; gap: 12px; align-items: flex-start; padding: 12px 16px; border-radius: 12px; border: 2px solid var(--line); background: #fff; font-size: 15px; line-height: 21px; }
-.verdict .badge { flex: none; padding: 3px 12px; border-radius: 999px; font-weight: 700; color: #fff; font-size: 14px; }
-.verdict.ok { border-color: var(--main-bd); } .verdict.ok .badge { background: var(--main-bd); }
-.verdict.bad { border-color: var(--ink); } .verdict.bad .badge { background: var(--ink); }
-.verdict.changes { border-color: var(--sub-bd); } .verdict.changes .badge { background: var(--sub-bd); }
-.verdict.idle .badge { background: #8A8D93; }
-.found { display: flex; flex-direction: column; gap: 6px; }
-.found h3 { font-size: 15px; font-family: var(--body); }
-.found ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
-.found li { padding: 7px 12px; background: var(--main-bg); border-left: 4px solid var(--main-bd); border-radius: 6px; font-size: 15px; }
-.found .slot { background: transparent; border: 2px dashed #B8B4AA; border-left-width: 2px; color: var(--muted); }
-.bar { height: 8px; background: #E3E0D7; border-radius: 999px; overflow: hidden; }
-.bar > i { display: block; height: 100%; background: var(--main-bd); width: 0; transition: width .3s; }
-.deps { font-size: 14px; line-height: 20px; color: var(--ink2); padding: 10px 14px; background: #fff; border-radius: 10px; border: 1px solid var(--line); }
-.deps ul { margin: 4px 0 0; padding-left: 18px; }
-.actions { display: flex; gap: 10px; flex-wrap: wrap; }
-.solution { padding: 12px 16px; background: #fff; border-radius: 12px; border: 1px solid var(--line); font-size: 15px; }
-.solution ul { margin: 6px 0 0; padding-left: 18px; }
-.hint { font-size: 13px; color: var(--muted); }
-
-@media (max-width: 720px) {
-  .app { padding: 16px 16px 40px; }
-  .head h1 { font-size: 30px; line-height: 34px; }
-  .grid2 { grid-template-columns: 1fr; }
-  .tr { grid-template-columns: 1fr; gap: 4px; }
-  .tr.th { display: none; }
-  .tab { padding: 12px 10px; font-size: 14px; }
-  .sentence { font-size: 19px; line-height: 27px; }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#16181C; --card:#1F2329; --ink:#F2F0EB; --ink-soft:#AEB3BB; --rule:#363B43;
+    --main:#5EC9BC; --main-bg:#13302E; --coord:#B8A1F5; --coord-bg:#271D3D; --sub:#F59B6B; --sub-bg:#3A2114;
+    color-scheme: dark;
+  }
 }
-@media (prefers-reduced-motion: reduce) { .chip, .bar > i, .switch span, .switch span::after { transition: none; } }
+:root[data-theme="dark"]{
+  --paper:#16181C; --card:#1F2329; --ink:#F2F0EB; --ink-soft:#AEB3BB; --rule:#363B43;
+  --main:#5EC9BC; --main-bg:#13302E; --coord:#B8A1F5; --coord-bg:#271D3D; --sub:#F59B6B; --sub-bg:#3A2114;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--paper); color:var(--ink); font-family:var(--body);
+  font-size:clamp(15px,1.15vw,19px); line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 7.5rem;
+}
+.wrap{max-width:1180px;margin:0 auto}
+.top{display:flex;flex-wrap:wrap;gap:.75rem 1.25rem;align-items:baseline;justify-content:space-between;
+  padding-block:1.1rem .9rem;border-bottom:1px solid var(--rule)}
+.top .who{font-size:.72em;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft)}
+.top .tools{display:flex;gap:.5rem;align-items:center}
+button{font-family:inherit;font-size:1em;cursor:pointer}
+.ghost{background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;
+  padding:.3rem .8rem;font-size:.78em;font-weight:700;letter-spacing:.04em}
+.ghost[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+button:focus-visible{outline:3px solid var(--main);outline-offset:2px}
+
+.step{padding-block:1.6rem}
+.step[hidden]{display:none!important}
+.eyebrow{font-size:.72em;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 .35rem}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(2rem,4.4vw,3.6rem);line-height:1.04;margin:0 0 .5rem;text-wrap:balance}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(1.45rem,2.7vw,2.3rem);line-height:1.1;margin:0 0 .5rem;text-wrap:balance}
+h3{font-family:var(--display);font-weight:700;font-size:1.05em;margin:0 0 .35rem}
+.lead{font-size:clamp(1.02rem,1.5vw,1.3rem);color:var(--ink-soft);margin:0 0 1.2rem;max-width:62ch;text-wrap:balance}
+p{margin:0 0 .7rem;max-width:68ch}
+p:last-child{margin-bottom:0}
+.soft{color:var(--ink-soft)}
+.mt{margin-top:1.1rem}
+
+.regia{display:none;margin:1rem 0 0;padding:.75rem 1rem;border-left:4px solid var(--main);
+  background:var(--card);border-radius:0 10px 10px 0;font-size:.88em;color:var(--ink-soft);max-width:76ch}
+body.regia-on .regia{display:block}
+.regia b{color:var(--ink)}
+
+.periodo{font-size:clamp(1.15rem,2.1vw,1.75rem);line-height:1.55;font-family:var(--display);font-weight:600}
+.periodo.sm{font-size:clamp(1.02rem,1.6vw,1.3rem)}
+mark{padding:.08em .3em;border-radius:6px;background:var(--sub-bg);color:inherit}
+mark.m{background:var(--main-bg)}
+mark.c{background:var(--coord-bg)}
+.star{color:var(--ink-soft);font-weight:700}
+.hook{display:inline-block;padding:.02em .4em;border-radius:6px;border:2px solid var(--sub);color:var(--sub);font-weight:700;font-size:.92em}
+
+.grid{display:grid;gap:1rem}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
+.card{background:var(--card);border-radius:14px;padding:1.1rem 1.25rem;min-width:0}
+.card.plain{background:none;border:1px solid var(--rule)}
+.tag{display:inline-block;font-size:.7em;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  padding:.2rem .55rem;border-radius:999px;margin-bottom:.5rem}
+.tag.m{background:var(--main-bg);color:var(--main)}
+.tag.c{background:var(--coord-bg);color:var(--coord)}
+.tag.s{background:var(--sub-bg);color:var(--sub)}
+.tag.n{background:var(--paper);color:var(--ink-soft);border:1px solid var(--rule)}
+
+.gradini{display:flex;flex-direction:column;gap:.55rem}
+.row{display:flex;align-items:flex-start;gap:.4rem;flex-wrap:wrap}
+.blk{display:inline-flex;flex-direction:column;gap:.1rem;padding:.45rem .8rem;border-radius:10px;border:2px solid;min-width:0}
+.blk .lbl{font-size:.64em;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.blk .txt{font-size:1.02em;font-family:var(--display);font-weight:600}
+.blk.m{border-color:var(--main);background:var(--main-bg)}.blk.m .lbl{color:var(--main)}
+.blk.c{border-color:var(--coord);background:var(--coord-bg)}.blk.c .lbl{color:var(--coord)}
+.blk.s{border-color:var(--sub);background:var(--sub-bg)}.blk.s .lbl{color:var(--sub)}
+.elbow{flex:none;width:20px;height:30px;margin-top:-6px;border-left:2px solid var(--sub);
+  border-bottom:2px solid var(--sub);border-bottom-left-radius:8px}
+.join{flex:none;align-self:center;min-width:1.9rem;text-align:center;padding:.15rem .4rem;border-radius:999px;
+  background:var(--coord);color:var(--paper);font-weight:700;font-size:.9em}
+.ind1{margin-left:1.5rem}
+
+.probe{border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:999px;
+  padding:.35rem .9rem;font-size:.82em;font-weight:700}
+.probe[aria-expanded="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.out{font-size:.95em;padding:.6rem .9rem;border-radius:10px;background:var(--paper);border:1px dashed var(--rule)}
+.out[hidden]{display:none!important}
+
+.tblwrap{overflow-x:auto;border:1px solid var(--rule);border-radius:14px}
+.tbl{width:100%;border-collapse:collapse;font-size:.95em}
+.tbl th,.tbl td{text-align:left;padding:.6rem .85rem;border-top:1px solid var(--rule);vertical-align:top}
+.tbl thead th{border-top:none;background:var(--card);font-size:.72em;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* procedura */
+.steps4{display:flex;flex-direction:column;gap:.6rem}
+.passo{display:grid;grid-template-columns:2.2rem minmax(0,1fr);gap:.8rem;align-items:start;
+  background:var(--card);border-radius:14px;padding:.9rem 1.1rem}
+.passo .n{width:2.2rem;height:2.2rem;border-radius:999px;background:var(--main);color:var(--paper);
+  display:grid;place-items:center;font-family:var(--display);font-weight:800}
+
+/* esercitazione a clic */
+.ex{display:flex;flex-direction:column;gap:.7rem}
+.item{background:var(--card);border-radius:14px;padding:1rem 1.15rem;display:flex;flex-direction:column;gap:.55rem}
+.item .num{font-size:.7em;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.seg{background:none;border:none;padding:.08em .3em;margin:0 .05em;border-radius:6px;color:inherit;
+  font:inherit;cursor:pointer;line-height:inherit;text-decoration:underline dotted var(--rule) 2px;text-underline-offset:.25em}
+.seg:hover{background:var(--paper)}
+.seg.hit{background:var(--main-bg);color:var(--main);text-decoration:none}
+.seg.miss{background:var(--sub-bg);text-decoration:line-through;text-decoration-color:var(--sub)}
+.seg[disabled]{cursor:default}
+.fb{font-size:.95em;padding:.55rem .85rem;border-radius:10px;background:var(--paper);border:1px solid var(--rule)}
+.fb[hidden]{display:none!important}
+.fb.ok{border-color:var(--main)}
+.fb.ko{border-color:var(--sub)}
+.score{display:flex;flex-wrap:wrap;gap:.6rem 1rem;align-items:center;padding:.8rem 1.1rem;border-radius:14px;
+  border:1px solid var(--rule);font-weight:700;font-variant-numeric:tabular-nums}
+.score .big{font-family:var(--display);font-size:1.6em;color:var(--main)}
+
+/* vero/falso */
+.vf{display:flex;flex-direction:column;gap:.6rem}
+.vfitem{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.5rem 1rem;align-items:center;
+  background:var(--card);border-radius:14px;padding:.85rem 1.1rem}
+.vfitem .btns{display:flex;gap:.4rem}
+.vfbtn{border:2px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:999px;padding:.25rem .9rem;font-weight:700}
+.vfbtn.right{border-color:var(--main);background:var(--main-bg);color:var(--main)}
+.vfbtn.wrong{border-color:var(--sub);background:var(--sub-bg);color:var(--sub)}
+.vfitem .why{grid-column:1/-1;font-size:.92em;color:var(--ink-soft)}
+.vfitem .why[hidden]{display:none!important}
+
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--card);border-top:1px solid var(--rule);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-top:.6rem;padding-bottom:calc(.6rem + env(safe-area-inset-bottom,0px))}
+.bar .inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.nav{background:var(--ink);color:var(--paper);border:none;border-radius:999px;padding:.5rem 1.15rem;font-weight:700}
+.nav:disabled{opacity:.3;cursor:default}
+.dots{display:flex;gap:.3rem;flex:1 1 180px;min-width:0;flex-wrap:wrap}
+.dot{width:1.6rem;height:1.6rem;border-radius:999px;border:1px solid var(--rule);background:var(--paper);
+  color:var(--ink-soft);font-size:.72em;font-weight:700;display:grid;place-items:center;padding:0}
+.dot[aria-current="true"]{background:var(--main);border-color:var(--main);color:var(--paper)}
+.counter{font-size:.78em;font-weight:700;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:no-preference){.step{animation:in .18s ease-out}@keyframes in{from{opacity:.4}to{opacity:1}}}
+
+/* capitoli e aggiunte del capitolo 2 */
+.caps{display:flex;gap:.4rem;flex-wrap:wrap}
+.cap{border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:999px;padding:.3rem .9rem;font-size:.8em;font-weight:700}
+.cap[aria-current="true"]{background:var(--main);border-color:var(--main);color:var(--paper)}
+.g2w{grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr))}
+.ind2{margin-left:3.5rem}.ind3{margin-left:6rem}
+@media (max-width:560px){.ind2{margin-left:2.2rem}.ind3{margin-left:2.2rem}}
+.passage .lk,.passage .ins{transition:background .15s}
+.passage.on .lk{outline:2px solid var(--sub);outline-offset:1px;border-radius:4px;color:var(--sub)}
+.passage.on .ins{background:var(--coord-bg);border-radius:6px}
+#showlinks[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.tbl td[rowspan]{background:var(--card)}
 </style>
 </head>
 <body>
-<div class="app">
-  <div class="tabs" role="tablist" aria-label="Sezioni">
-    <button class="tab" role="tab" id="t-s1" aria-controls="p-s1" aria-selected="true">Scheda 1</button>
-    <button class="tab" role="tab" id="t-s2" aria-controls="p-s2" aria-selected="false">Scheda 2</button>
-    <button class="tab" role="tab" id="t-lab" aria-controls="p-lab" aria-selected="false">Laboratorio<span class="new">nuovo</span></button>
+<div class="wrap">
+  <div class="top">
+    <span class="who">Analisi del periodo · 2ª</span>
+    <div class="tools">
+      <div class="caps" role="group" aria-label="Capitoli"><button class="cap" type="button" data-cap="1">1 · Trova la principale</button><button class="cap" type="button" data-cap="2">2 · Chi comanda nel periodo</button></div>
+      <button class="ghost" id="tema">Tema</button>
+    </div>
   </div>
 
-  <!-- ============ SCHEDA 1 ============ -->
-  <div id="p-s1" role="tabpanel" aria-labelledby="t-s1" class="stack">
-    <div class="head">
-      <span class="eyebrow">Analisi del periodo · scheda 1 di 2</span>
-      <h1>Come si agganciano le frasi</h1>
-      <p>Nel periodo le frasi si legano in due modi: stanno <b>sullo stesso piano</b> (coordinazione) oppure una <b>dipende</b> dall'altra (subordinazione).</p>
-      <div class="legend">
-        <span><i class="sw main"></i>principale</span>
-        <span><i class="sw coord"></i>coordinata</span>
-        <span><i class="sw sub"></i>subordinata</span>
-        <span><i class="sw hook"></i>legame di dipendenza</span>
-      </div>
+  <!-- 1 -->
+  <section class="step" data-cap="1" data-t="Apertura">
+    <p class="eyebrow">Grammatica · ripasso e consolidamento</p>
+    <h1>Trova la principale</h1>
+    <p class="lead">La principale l'hai già incontrata. Qui la rimetti alla prova: smonti tre regole sbagliate che circolano, impari un metodo in quattro passi e lo applichi a dieci periodi.</p>
+    <div class="grid g3">
+      <div class="card"><span class="tag m">prima</span><p>Tre periodi in cui le scorciatoie sbagliano.</p></div>
+      <div class="card"><span class="tag c">poi</span><p>Che cos'è davvero la principale e come si riconosce.</p></div>
+      <div class="card"><span class="tag s">infine</span><p>Esercizi a clic e vero o falso, con la correzione subito.</p></div>
     </div>
-    <div class="grid2">
-      <div class="card"><b>Reggente</b>: la frase da cui dipende, o a cui è coordinata, un'altra frase.</div>
-      <div class="card"><b>Principale</b>: la reggente che non dipende da nessun'altra frase. Ha senso compiuto da sola.</div>
-    </div>
-    <section class="sec">
-      <h2 style="color:#5B21B6">Coordinazione · sullo stesso piano</h2>
-      <div id="d-coord" class="row"></div>
-      <p>Le due frasi sono alla pari: ognuna starebbe in piedi da sola. Le uniscono <b>e, ma, o, però, quindi, infatti</b>… È la <b>paratassi</b> (dal greco <i>para</i>, «accanto»).</p>
-    </section>
-    <section class="sec">
-      <h2 style="color:#9A3412">Subordinazione · un gradino più in basso</h2>
-      <div id="d-sub" class="col"></div>
-      <p>La seconda frase ha senso <b>solo in presenza della prima</b>: dipende da lei. La agganciano <b>quando, perché, se, mentre</b>… oppure un verbo di modo non finito. È l'<b>ipotassi</b> (dal greco <i>ypò</i>, «sotto»).</p>
-    </section>
-    <section class="sec">
-      <h2 style="color:#0B5F58">I due legami nello stesso periodo</h2>
-      <div id="d-both1" class="col"></div>
-      <p><i>Per venirti a prendere</i> dipende da <i>Mi preparo</i> e regge <i>e andare al cinema</i>: è <b>sia dipendente sia reggente</b>.</p>
-      <hr class="rule">
-      <div id="d-both2" class="col"></div>
-      <p>Anche una coordinata può fare da reggente: la causale dipende da <i>guardo la televisione</i>.</p>
-    </section>
-    <button class="btn primary try" data-goto="lab">Prova a spostare le frasi →</button>
-  </div>
+  </section>
 
-  <!-- ============ SCHEDA 2 ============ -->
-  <div id="p-s2" role="tabpanel" aria-labelledby="t-s2" class="stack" hidden>
-    <div class="head">
-      <span class="eyebrow">Analisi del periodo · scheda 2 di 2</span>
-      <h1>Parallelo, catena e posizione</h1>
-      <p>Più dipendenti possono agganciarsi <b>tutte alla stessa reggente</b> oppure <b>l'una all'altra</b>. Da questo dipende dove possono stare nel periodo.</p>
+  <!-- 2 -->
+  <section class="step" data-cap="1" data-t="Tre scorciatoie">
+    <p class="eyebrow">Mettiti alla prova</p>
+    <h2>Tre scorciatoie che sbagliano</h2>
+    <p class="lead">Per ogni periodo decidi qual è la principale. Poi apri e scopri quale scorciatoia ti avrebbe ingannato.</p>
+    <div class="grid g3">
+      <div class="card"><span class="tag n">periodo A</span>
+        <p class="periodo sm">Uscendo di casa, ho dimenticato le chiavi.</p>
+        <button class="probe" data-rev="a1" aria-expanded="false">Scopri</button>
+        <div class="out mt" id="a1" hidden><p><strong>Scorciatoia: «la principale è la prima frase».</strong></p><p>Sbagliato. La principale è <mark class="m">ho dimenticato le chiavi</mark>. <em>Uscendo di casa</em> viene prima, ma dipende da lei.</p></div></div>
+      <div class="card"><span class="tag n">periodo B</span>
+        <p class="periodo sm">Credo che domani nevicherà.</p>
+        <button class="probe" data-rev="a2" aria-expanded="false">Scopri</button>
+        <div class="out mt" id="a2" hidden><p><strong>Scorciatoia: «la principale dice la cosa più importante».</strong></p><p>Sbagliato. La notizia è che nevicherà, ma la principale è <mark class="m">Credo</mark>. Il contenuto non decide: decide chi regge chi.</p></div></div>
+      <div class="card"><span class="tag n">periodo C</span>
+        <p class="periodo sm">Bisogna che tu ti decida.</p>
+        <button class="probe" data-rev="a3" aria-expanded="false">Scopri</button>
+        <div class="out mt" id="a3" hidden><p><strong>Scorciatoia: «la principale ha senso compiuto da sola».</strong></p><p>Sbagliato. La principale è <mark class="m">Bisogna</mark>, che da sola resta monca: ha bisogno della frase che segue come soggetto.</p></div></div>
     </div>
-    <div class="grid2">
-      <section class="sec" style="padding:14px 16px">
-        <h2 style="color:#0B5F58">In parallelo · stesso gradino</h2>
-        <p class="ex-sentence">Quando è mattina presto, prima di aprire, Gino pulisce le vetrine.</p>
-        <div id="d-par" class="col" style="padding-top:4px"></div>
-        <p>Ogni dipendente si aggancia <b>per conto proprio</b> alla reggente: possono disporsi abbastanza liberamente intorno a essa.</p>
-      </section>
-      <section class="sec" style="padding:14px 16px">
-        <h2 style="color:#9A3412">A catena · un gradino dopo l'altro</h2>
-        <p class="ex-sentence">Mi sbrigo per prendere l'autobus per andare a scuola.</p>
-        <div id="d-chain" class="col" style="padding-top:4px"></div>
-        <p>La dipendente di 2° grado dipende <b>da un'altra dipendente</b>: deve restarle vicino.</p>
-      </section>
-    </div>
-    <section class="sec dark">
-      <h2>La regola della posizione</h2>
-      <p class="big">Ogni frase si sposta solo insieme a tutto ciò che è agganciato a lei.</p>
-      <p><b>Prova dello spostamento</b>: porta la frase, con il suo connettivo, all'inizio del periodo. Il periodo resta corretto? È una subordinata. Diventa sgrammaticato? È una coordinata.</p>
-    </section>
-    <div class="table">
-      <div class="tr th"><span>Che cosa sposto</span><span>Periodo</span><span>Dopo lo spostamento</span><span>Va?</span></div>
-      <div class="tr"><span class="t-sub">Subordinata</span><span>Chiamami <span class="hl s">quando arrivi</span>.</span><span><span class="hl s">Quando arrivi</span>, chiamami.</span><span class="yes">sì</span></div>
-      <div class="tr"><span class="t-coord">Coordinata</span><span>Provaci <span class="hl c">e vedrai</span>.</span><span>* <span class="hl c">E vedrai</span>, provaci.</span><span class="no">no</span></div>
-      <div class="tr"><span class="t-sub">Subordinata con la sua coordinata</span><span>Mi preparo <span class="hl s">per venirti a prendere e andare al cinema</span>.</span><span><span class="hl s">Per venirti a prendere e andare al cinema</span>, mi preparo.</span><span class="yes">sì</span></div>
-      <div class="tr"><span class="t-coord">Coordinata staccata</span><span>Mi preparo per venirti a prendere <span class="hl c">e andare al cinema</span>.</span><span>* <span class="hl c">E andare al cinema</span>, mi preparo per venirti a prendere.</span><span class="no">no</span></div>
-      <div class="tn">L'asterisco (*) segnala un periodo sgrammaticato.</div>
-    </div>
-    <div class="note">
-      <b>La reggente non sta sempre all'inizio</b>
-      <span class="l"><span class="hl m">Lorenzo non è andato da Giulio</span>, <span class="hl s">perché pioveva a dirotto</span>. <i>→ dipendente esplicita, dopo la reggente</i></span>
-      <span class="l"><span class="hl s">Avendo sentito bussare</span>, <span class="hl m">Silvia ha aperto la porta</span>. <i>→ dipendente implicita, prima della reggente</i></span>
-    </div>
-    <button class="btn primary try" data-goto="lab">Ora prova tu: trascina le frasi →</button>
-  </div>
+  </section>
 
-  <!-- ============ LABORATORIO ============ -->
-  <div id="p-lab" role="tabpanel" aria-labelledby="t-lab" class="stack" hidden>
-    <div class="head">
-      <span class="eyebrow">Laboratorio · prova dello spostamento</span>
-      <h1>Sposta le frasi</h1>
-      <p>Trascina le proposizioni per cambiarne l'ordine. Il periodo si riscrive da solo e ti dice se <b>regge</b>. Trova <b>tutti</b> gli ordini che funzionano.</p>
+  <!-- 3 -->
+  <section class="step" data-cap="1" data-t="Che cos'è">
+    <p class="eyebrow">La definizione</p>
+    <h2>La principale sta sul gradino più alto</h2>
+    <p class="lead">La principale è la frase che <strong>non dipende da nessun'altra</strong>. Tutte le altre frasi del periodo dipendono da lei: direttamente, oppure passando da un'altra dipendente.</p>
+    <div class="card">
+      <p class="periodo sm" style="margin-bottom:.9rem">Quando suona la campanella, gli studenti escono per andare a casa.</p>
+      <div class="gradini">
+        <div class="row"><div class="blk m"><span class="lbl">principale · 1° gradino</span><span class="txt">gli studenti escono</span></div></div>
+        <div class="row ind1"><div class="elbow" aria-hidden="true"></div>
+          <div class="blk s"><span class="lbl">subordinata · 1° grado</span><span class="txt">Quando suona la campanella</span></div>
+          <div class="blk s"><span class="lbl">subordinata · 1° grado</span><span class="txt">per andare a casa</span></div></div>
+      </div>
+      <p class="mt">Le due subordinate si agganciano entrambe a <em>escono</em>: dicono quando e perché gli studenti escono. Nessuna frase sta sopra <em>gli studenti escono</em>.</p>
     </div>
-    <div class="lab-top">
-      <div class="pills" id="pills" role="group" aria-label="Esercizi"></div>
-      <label class="switch"><input type="checkbox" id="roles" checked><span aria-hidden="true"></span>Mostra ruoli e legami</label>
+    <div class="grid g2 mt">
+      <div class="card plain"><span class="tag m">principale</span><p>Non dipende da nessuna. È la reggente di tutte.</p></div>
+      <div class="card plain"><span class="tag n">reggente</span><p>Qualunque frase da cui un'altra dipende. La principale è una reggente, ma non tutte le reggenti sono principali.</p></div>
     </div>
-    <section class="work" id="work" aria-live="off">
-      <div>
-        <span class="eyebrow" id="exNum"></span>
-        <h2 id="exTitle"></h2>
+  </section>
+
+  <!-- 4 -->
+  <section class="step" data-cap="1" data-t="I ganci">
+    <p class="eyebrow">Gli indizi</p>
+    <h2>Le frasi dipendenti hanno un gancio</h2>
+    <p class="lead">Per trovare la principale conviene procedere per esclusione: si scartano le frasi che hanno un gancio. Il gancio è ciò che aggancia una frase a un'altra.</p>
+    <div class="tblwrap">
+      <table class="tbl">
+        <thead><tr><th>Gancio</th><th>Esempi</th><th>Periodo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>congiunzione subordinante</strong></td><td>perché, quando, se, mentre, benché, affinché, che…</td><td>Esco <span class="hook">quando</span> smette di piovere.</td></tr>
+          <tr><td><strong>pronome relativo</strong></td><td>che, il quale, cui, dove…</td><td>Ho letto il libro <span class="hook">che</span> mi hai prestato.</td></tr>
+          <tr><td><strong>verbo di modo indefinito</strong></td><td>infinito, gerundio, participio</td><td><span class="hook">Uscendo</span> di casa, ho dimenticato le chiavi.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid g2 mt">
+      <div class="card"><span class="tag m">la principale</span><p>Non ha ganci. Il suo verbo è di modo finito: indicativo, congiuntivo, condizionale o imperativo.</p></div>
+      <div class="card plain"><span class="tag n">attenzione</span><p><em>Perché</em> all'inizio di una domanda diretta non è un gancio: <em>Perché non hai risposto?</em> è una principale interrogativa. Il gancio è <em>perché</em> quando aggancia una frase a un'altra: <em>Resto a casa perché piove.</em></p></div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="step" data-cap="1" data-t="Il metodo">
+    <p class="eyebrow">Il metodo</p>
+    <h2>Quattro passi, un esempio</h2>
+    <p class="periodo" style="margin-bottom:1rem">Per non perdere l'autobus, Marta, che abita lontano, esce di casa alle sette.</p>
+    <div class="steps4">
+      <div class="passo"><span class="n">1</span><div><h3>Trova i verbi e dividi in frasi</h3>
+        <button class="probe" data-rev="p1" aria-expanded="false">Applica</button>
+        <div class="out mt" id="p1" hidden>Tre verbi: <em>perdere</em>, <em>abita</em>, <em>esce</em>. Quindi tre frasi. Attenzione: <em>che abita lontano</em> sta in mezzo e spezza in due un'altra frase.</div></div></div>
+      <div class="passo"><span class="n">2</span><div><h3>Cerca i ganci e scarta</h3>
+        <button class="probe" data-rev="p2" aria-expanded="false">Applica</button>
+        <div class="out mt" id="p2" hidden><span class="hook">per</span> + infinito <em>non perdere</em>: dipende. <span class="hook">che</span> relativo in <em>che abita lontano</em>: dipende.</div></div></div>
+      <div class="passo"><span class="n">3</span><div><h3>Quella senza gancio è la principale</h3>
+        <button class="probe" data-rev="p3" aria-expanded="false">Applica</button>
+        <div class="out mt" id="p3" hidden><mark class="m">Marta … esce di casa alle sette</mark>: nessun gancio, verbo all'indicativo. È spezzata in due dalla relativa, ma è una sola frase.</div></div></div>
+      <div class="passo"><span class="n">4</span><div><h3>Controlla: tutto porta a lei?</h3>
+        <button class="probe" data-rev="p4" aria-expanded="false">Applica</button>
+        <div class="out mt" id="p4" hidden>
+          <p>La finale dice perché Marta esce; la relativa dice qualcosa su Marta. Ogni dipendente si aggancia alla principale.</p>
+          <div class="gradini mt">
+            <div class="row"><div class="blk m"><span class="lbl">principale</span><span class="txt">Marta … esce di casa alle sette</span></div></div>
+            <div class="row ind1"><div class="elbow" aria-hidden="true"></div>
+              <div class="blk s"><span class="lbl">subordinata finale</span><span class="txt">Per non perdere l'autobus</span></div>
+              <div class="blk s"><span class="lbl">relativa · aggancio a «Marta»</span><span class="txt">che abita lontano</span></div></div>
+          </div></div></div></div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="step" data-cap="1" data-t="Casi difficili">
+    <p class="eyebrow">Casi difficili</p>
+    <h2>Cinque travestimenti della principale</h2>
+    <div class="grid g3">
+      <div class="card"><span class="tag m">non è la prima</span>
+        <p class="periodo sm">Se piove, <mark class="m">resto a casa</mark>.</p>
+        <p class="soft">La posizione non conta: conta chi regge chi.</p></div>
+      <div class="card"><span class="tag m">è spezzata</span>
+        <p class="periodo sm"><mark class="m">Il treno</mark>, che doveva arrivare alle otto, <mark class="m">è in ritardo</mark>.</p>
+        <p class="soft">Un inciso la divide in due pezzi. Si rimettono insieme: <em>Il treno è in ritardo.</em></p></div>
+      <div class="card"><span class="tag m">è monca</span>
+        <p class="periodo sm"><mark class="m">Spero</mark> che tu venga.</p>
+        <p class="soft"><em>Spero</em> ha bisogno di sapere che cosa: la dipendente occupa il posto dell'oggetto. È ancora la principale.</p></div>
+      <div class="card"><span class="tag m">è una domanda o un ordine</span>
+        <p class="periodo sm"><mark class="m">Dimmi</mark> che cosa è successo.</p>
+        <p class="soft">La principale può essere all'imperativo, o una domanda diretta: <em>Perché non hai risposto?</em></p></div>
+      <div class="card"><span class="tag c">ha una compagna</span>
+        <p class="periodo sm"><mark class="m">Ho chiuso la finestra</mark> e <mark class="c">ho acceso il riscaldamento</mark>.</p>
+        <p class="soft">Due frasi senza gancio, unite da <em>e</em>: la principale e la sua coordinata, sullo stesso gradino.</p></div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="step" data-cap="1" data-t="Esercitazione">
+    <p class="eyebrow">Esercitati</p>
+    <h2>Clicca la principale</h2>
+    <p class="lead">I periodi sono già divisi in frasi. Clicca la principale: se è spezzata, basta cliccare uno dei due pezzi. Conta il primo tentativo.</p>
+    <div class="score" id="score"><span>Primo tentativo giusto:</span><span class="big" id="sc">0</span><span>su <span id="sct">0</span> svolti</span><button class="probe" id="reset" type="button">Ricomincia</button></div>
+    <div class="ex mt" id="ex"></div>
+  </section>
+
+  <!-- 8 -->
+  <section class="step" data-cap="1" data-t="Vero o falso">
+    <p class="eyebrow">Verifica rapida</p>
+    <h2>Vero o falso?</h2>
+    <div class="vf" id="vf"></div>
+  </section>
+
+  <!-- 9 -->
+  <section class="step" data-cap="1" data-t="Quaderno">
+    <p class="eyebrow">Ripasso</p>
+    <h2>Sul quaderno</h2>
+    <div class="grid g2">
+      <div class="card"><span class="tag m">da copiare</span>
+        <ol style="margin:.3rem 0 0;padding-left:1.3rem;font-size:1.05em;line-height:1.7">
+          <li>La <strong>principale</strong> è la frase che non dipende da nessun'altra. Tutte le altre dipendono da lei.</li>
+          <li>Non ha <strong>ganci</strong>: né congiunzione subordinante, né pronome relativo, né verbo di modo indefinito.</li>
+          <li>Non è per forza la prima, non è per forza la più importante, non sempre ha senso compiuto da sola.</li>
+          <li>Metodo: verbi e frasi → ganci → la frase senza gancio → controllo.</li>
+        </ol></div>
+      <div class="card"><span class="tag s">e adesso</span>
+        <p>Rifai l'esercitazione con «Ricomincia» finché non trovi tutte le principali al primo tentativo.</p>
+        <p class="soft">Poi passa al capitolo 2: come le altre frasi si legano alla principale.</p></div>
+    </div>
+  </section>
+  <!-- ===================== CAPITOLO 2 ===================== -->
+
+  <!-- 2.1 -->
+  <section class="step" data-cap="2" data-t="Apertura">
+    <p class="eyebrow">Capitolo 2 · coordinazione e subordinazione</p>
+    <h1>Chi comanda nel periodo</h1>
+    <p class="lead">Hai imparato a trovare la principale. Ora guarda come le altre frasi si legano a lei e tra loro. I modi sono soltanto due.</p>
+    <div class="grid g3">
+      <div class="card"><span class="tag c">coordinazione · paratassi</span>
+        <p>Due frasi stanno <strong>sullo stesso piano</strong>. Le collega una congiunzione coordinante oppure un segno di punteggiatura: virgola, punto e virgola, due punti.</p></div>
+      <div class="card"><span class="tag s">subordinazione · ipotassi</span>
+        <p>Una frase <strong>dipende</strong> dall'altra, per la sintassi e per il significato. La aggancia una congiunzione, una preposizione, un pronome oppure un verbo di modo indefinito.</p></div>
+      <div class="card"><span class="tag m">reggente</span>
+        <p>In ogni legame c'è una <strong>reggente</strong>: la frase da cui un'altra dipende, o a cui un'altra è coordinata. Può essere una principale, una coordinata o una subordinata.</p></div>
+    </div>
+  </section>
+
+  <!-- 2.2 -->
+  <section class="step" data-cap="2" data-t="Lavoro sul testo">
+    <p class="eyebrow">Lavoro sul testo</p>
+    <h2>Come si attaccano le frasi?</h2>
+    <p class="lead">Leggi il testo. Poi trova un esempio per ciascuno dei quattro casi qui sotto.</p>
+    <div class="card">
+      <p class="periodo sm passage" id="passage"><span class="lk">Quando</span> arrivammo al rifugio, il sole stava già tramontando. Marco, <span class="ins"><span class="lk">che</span> aveva portato la mappa</span>, controllò il sentiero <span class="lk">e</span> ci disse <span class="lk">di</span> aspettare. Faceva freddo, <span class="lk">ma</span> nessuno si lamentava: eravamo troppo stanchi <span class="lk">per</span> parlare. Credo fosse la sera più bella della gita.</p>
+    </div>
+    <div class="grid g2 mt">
+      <div class="card plain">
+        <ol style="margin:0;padding-left:1.3rem;line-height:1.7">
+          <li>Una frase che sta <strong>in mezzo</strong> a un'altra.</li>
+          <li>Una frase separata dalla precedente <strong>solo da un segno di punteggiatura</strong>.</li>
+          <li>Frasi introdotte da una <strong>congiunzione</strong>, da una <strong>preposizione</strong>, da un <strong>pronome</strong>.</li>
+          <li>Una frase che segue la precedente <strong>senza niente in mezzo</strong>.</li>
+        </ol>
+        <button class="probe mt" id="showlinks" type="button" aria-pressed="false">Mostra i collegamenti nel testo</button>
       </div>
-      <p class="task" id="exTask"></p>
-      <div class="tray roles-on" id="tray" role="list" aria-label="Proposizioni: trascinale o usa le frecce sinistra e destra"></div>
-      <p class="hint">Con la tastiera: seleziona una frase con Tab e spostala con le frecce ← →.</p>
-      <div class="sentence" id="sentence" aria-live="polite"></div>
-      <div class="verdict idle" id="verdict"><span class="badge">Prova</span><span>Sposta una frase per vedere se il periodo regge.</span></div>
-      <div class="deps" id="deps"></div>
-      <div class="found">
-        <h3 id="foundTitle"></h3>
-        <div class="bar"><i id="bar"></i></div>
-        <ul id="foundList"></ul>
+      <div class="card"><button class="probe" data-rev="pass-sol" aria-expanded="false">Soluzioni</button>
+        <div class="out mt" id="pass-sol" hidden>
+          <p><strong>1.</strong> <em>che aveva portato la mappa</em>: spezza in due <em>Marco … controllò il sentiero</em>.</p>
+          <p><strong>2.</strong> <em>il sole stava già tramontando</em> (dopo la virgola); <em>eravamo troppo stanchi</em> (dopo i due punti).</p>
+          <p><strong>3.</strong> Congiunzioni: <em>quando, e, ma</em>. Preposizioni: <em>di</em> aspettare, <em>per</em> parlare. Pronome: <em>che</em>.</p>
+          <p><strong>4.</strong> <em>fosse la sera più bella della gita</em> segue <em>Credo</em> senza connettivo né punteggiatura.</p>
+        </div></div>
+    </div>
+  </section>
+
+  <!-- 2.3 -->
+  <section class="step" data-cap="2" data-t="Stesso piano o dipendenza">
+    <p class="eyebrow">Coordinazione e subordinazione</p>
+    <h2>Sullo stesso piano o un gradino sotto</h2>
+    <div class="grid g2">
+      <div class="card"><span class="tag c">coordinazione</span>
+        <div class="gradini">
+          <div class="row">
+            <div class="blk m"><span class="lbl">principale</span><span class="txt">La gatta si arrampica sugli alberi</span></div>
+            <span class="join">e</span>
+            <div class="blk c"><span class="lbl">coordinata</span><span class="txt">rincorre le farfalle</span></div>
+          </div>
+        </div>
+        <p class="mt">Le due frasi sono sullo stesso piano.</p></div>
+      <div class="card"><span class="tag s">subordinazione</span>
+        <div class="gradini">
+          <div class="row"><div class="blk m"><span class="lbl">principale</span><span class="txt">La gatta si arrampica sugli alberi</span></div></div>
+          <div class="row ind1"><div class="elbow" aria-hidden="true"></div>
+            <div class="blk s"><span class="lbl">subordinata</span><span class="txt">per rincorrere le farfalle</span></div></div>
+        </div>
+        <p class="mt">La seconda frase ha senso soltanto in presenza della prima.</p></div>
+    </div>
+    <h3 class="mt" style="font-size:1.2em">La coordinata è meno libera della subordinata</h3>
+    <div class="grid g2">
+      <div class="card plain"><span class="tag c">coordinata · posto fisso</span>
+        <p class="periodo sm">Provaci e vedrai.</p>
+        <p>→ <span class="star">*</span><em>E vedrai, provaci.</em></p>
+        <p class="soft">La coordinata viene sempre dopo la frase a cui è collegata.</p></div>
+      <div class="card plain"><span class="tag s">subordinata · si sposta</span>
+        <p class="periodo sm">Chiamami quando arrivi.</p>
+        <p>→ <em>Quando arrivi, chiamami.</em></p>
+        <p class="soft">La subordinata può stare prima o dopo la frase da cui dipende.</p></div>
+    </div>
+  </section>
+
+  <!-- 2.4 -->
+  <section class="step" data-cap="2" data-t="La reggente">
+    <p class="eyebrow">La proposizione reggente</p>
+    <h2>Dipendente e reggente insieme</h2>
+    <p class="lead">Una subordinata dipende sempre da una reggente. Una coordinata è collegata a una reggente, ma non dipende da lei. E una frase può essere nello stesso momento <strong>dipendente</strong> e <strong>reggente</strong>.</p>
+    <div class="grid">
+      <div class="card"><span class="tag s">subordinata che regge una coordinata</span>
+        <p class="periodo sm" style="margin-bottom:.8rem">Mi preparo per venirti a prendere e andare al cinema.</p>
+        <div class="gradini">
+          <div class="row"><div class="blk m"><span class="lbl">principale</span><span class="txt">Mi preparo</span></div></div>
+          <div class="row ind1"><div class="elbow" aria-hidden="true"></div>
+            <div class="blk s"><span class="lbl">subordinata · dipendente e reggente</span><span class="txt">per venirti a prendere</span></div>
+            <span class="join">e</span>
+            <div class="blk s"><span class="lbl">coordinata alla subordinata</span><span class="txt">andare al cinema</span></div></div>
+        </div></div>
+      <div class="card"><span class="tag s">subordinata che regge una subordinata</span>
+        <p class="periodo sm" style="margin-bottom:.8rem">Mi sbrigo per prendere l'autobus per andare a scuola.</p>
+        <div class="gradini">
+          <div class="row"><div class="blk m"><span class="lbl">principale</span><span class="txt">Mi sbrigo</span></div></div>
+          <div class="row ind1"><div class="elbow" aria-hidden="true"></div>
+            <div class="blk s"><span class="lbl">subordinata · dipendente e reggente</span><span class="txt">per prendere l'autobus</span></div></div>
+          <div class="row ind2"><div class="elbow" aria-hidden="true"></div>
+            <div class="blk s"><span class="lbl">subordinata</span><span class="txt">per andare a scuola</span></div></div>
+        </div></div>
+    </div>
+    <div class="card mt"><span class="tag c">coordinata che regge una subordinata</span>
+      <p class="periodo sm" style="margin-bottom:.8rem">Preparo la cena e guardo la televisione perché c'è il festival di Sanremo.</p>
+      <div class="gradini">
+        <div class="row">
+          <div class="blk m"><span class="lbl">principale</span><span class="txt">Preparo la cena</span></div>
+          <span class="join">e</span>
+          <div class="blk c"><span class="lbl">coordinata · reggente</span><span class="txt">guardo la televisione</span></div>
+        </div>
+        <div class="row ind3"><div class="elbow" aria-hidden="true"></div>
+          <div class="blk s"><span class="lbl">subordinata</span><span class="txt">perché c'è il festival di Sanremo</span></div></div>
       </div>
-      <div class="actions">
-        <button class="btn" id="reset" type="button">Ricomincia</button>
-        <button class="btn" id="reveal" type="button">Mostra gli ordini possibili</button>
-        <button class="btn primary" id="next" type="button" hidden>Esercizio successivo →</button>
-      </div>
-      <div class="solution" id="solution" hidden></div>
-    </section>
+    </div>
+  </section>
+
+  <!-- 2.5 -->
+  <section class="step" data-cap="2" data-t="Le coordinate">
+    <p class="eyebrow">Le proposizioni coordinate</p>
+    <h2>Quattro modi di legarsi, sei tipi</h2>
+    <div class="grid g3">
+      <div class="card"><h3>Congiunzione coordinante</h3><p class="soft">Esco <strong>e</strong> vado in biblioteca.</p></div>
+      <div class="card"><h3>Asindeto</h3><p>Senza congiunzioni, con un segno di punteggiatura che non sia il punto.</p><p class="soft">Entrò, salutò, si sedette.</p></div>
+      <div class="card"><h3>Polisindeto</h3><p>La stessa congiunzione ripetuta.</p><p class="soft"><strong>E</strong> corre <strong>e</strong> salta <strong>e</strong> ride.</p></div>
+      <div class="card"><h3>Correlazione</h3><p>Due elementi che lavorano in coppia, uno nella reggente e uno nella coordinata.</p><p class="soft"><strong>Sia</strong> studio <strong>sia</strong> lavoro.</p></div>
+    </div>
+    <div class="tblwrap mt">
+      <table class="tbl">
+        <thead><tr><th>Coordinata</th><th>Che cosa fa</th><th>Introdotta da</th><th>Esempio</th></tr></thead>
+        <tbody>
+          <tr><td><strong>copulativa</strong></td><td>si aggiunge alla reggente</td><td>e, né, inoltre, anche, neppure</td><td>Ho finito i compiti <strong>e</strong> sono uscito.</td></tr>
+          <tr><td><strong>avversativa</strong></td><td>si contrappone alla reggente</td><td>ma, però, eppure, tuttavia</td><td>Studia poco, <strong>però</strong> prende bei voti.</td></tr>
+          <tr><td><strong>disgiuntiva</strong></td><td>presenta un'alternativa</td><td>o, oppure</td><td>Vieni con noi <strong>oppure</strong> resti a casa?</td></tr>
+          <tr><td><strong>conclusiva</strong></td><td>esprime una conseguenza</td><td>dunque, quindi, perciò, pertanto</td><td>Pioveva, <strong>quindi</strong> siamo rimasti a casa.</td></tr>
+          <tr><td><strong>esplicativa</strong></td><td>spiega ciò che dice la reggente</td><td>infatti, cioè, ossia</td><td>È stanco: <strong>infatti</strong> ha dormito poco.</td></tr>
+          <tr><td><strong>correlativa</strong></td><td>è in coppia con la reggente</td><td>o… o, né… né, sia… sia, non solo… ma anche</td><td><strong>Non solo</strong> è arrivato tardi, <strong>ma</strong> ha <strong>anche</strong> dimenticato il libro.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mt"><strong>La coordinazione può avvenire anche tra due subordinate:</strong> <em>Ci vediamo per studiare <mark class="c">oppure per guardare un film</mark>.</em></p>
+  </section>
+
+  <!-- 2.6 -->
+  <section class="step" data-cap="2" data-t="Ellissi e incisi">
+    <p class="eyebrow">Le coordinate · casi particolari</p>
+    <h2>Pezzi sottintesi, incisi e frasi accostate</h2>
+    <div class="grid g3">
+      <div class="card"><span class="tag c">ellissi del soggetto</span>
+        <p class="periodo sm">Luca ha finito i compiti <mark class="c">ed è uscito</mark>.</p>
+        <p class="soft">Il soggetto della coordinata è sottinteso perché è lo stesso della reggente. Se è diverso va espresso: <em>Luca ha finito i compiti e Anna è uscita.</em></p></div>
+      <div class="card"><span class="tag c">ellissi di una parte del verbo</span>
+        <p class="periodo sm">Sara si era alzata <mark class="c">e vestita</mark>.</p>
+        <p class="soft">Nella coordinata è sottinteso <em>si era</em>.</p></div>
+      <div class="card"><span class="tag c">ellissi della congiunzione</span>
+        <p class="periodo sm">Quando sei stanco <mark class="c">e non riesci a concentrarti</mark>, fai una pausa.</p>
+        <p class="soft">Due subordinate coordinate: nella seconda è sottinteso <em>quando</em>.</p></div>
+    </div>
+    <div class="grid g2 mt">
+      <div class="card plain"><span class="tag n">incidentale</span>
+        <p class="periodo sm">La gita, <mark class="c">a quanto pare</mark>, è stata rimandata.</p>
+        <p class="soft">Una frase breve e autonoma inserita come inciso, tra virgole, parentesi o trattini: un commento, una precisazione.</p></div>
+      <div class="card plain"><span class="tag n">giustapposta</span>
+        <p class="periodo sm">Sbrigati, <mark class="c">è tardi</mark>.</p>
+        <p class="soft">Sembra una coordinata senza congiunzione, ma ha un legame simile alla subordinazione: <em>Sbrigati perché è tardi.</em> Sta a metà strada, e senza congiunzione non si può decidere con certezza.</p></div>
+    </div>
+  </section>
+
+  <!-- 2.7 -->
+  <section class="step" data-cap="2" data-t="Le subordinate">
+    <p class="eyebrow">Le proposizioni subordinate</p>
+    <h2>Esplicite e implicite</h2>
+    <div class="grid g2">
+      <div class="card"><span class="tag s">esplicita</span><p>Verbo di <strong>modo finito</strong>: indicativo, congiuntivo, condizionale.</p><p class="soft">Vedi <mark>che avevo ragione</mark>?</p></div>
+      <div class="card"><span class="tag s">implicita</span><p>Verbo di <strong>modo indefinito</strong>: infinito, gerundio, participio. Di solito il soggetto non è espresso.</p><p class="soft">Penso <mark>di andarmene</mark>.</p></div>
+    </div>
+    <div class="tblwrap mt">
+      <table class="tbl">
+        <thead><tr><th>Forma</th><th>Che cosa la aggancia</th><th>Esempi di connettivi</th><th>Periodo</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="4"><strong>esplicita</strong></td><td>congiunzione o locuzione subordinante</td><td>che, se, quando, perché, sebbene, dal momento che</td><td><span class="hook">Sebbene</span> fosse stanco, è andato in palestra.</td></tr>
+          <tr><td>pronome relativo o misto</td><td>che, il quale, chi, chiunque</td><td><span class="hook">Chi</span> ha finito può uscire.</td></tr>
+          <tr><td>aggettivo, pronome o avverbio interrogativo o esclamativo</td><td>come, quanto, quale</td><td>Mi chiedo <span class="hook">quale</span> sia la risposta giusta.</td></tr>
+          <tr><td>nessun connettivo</td><td>—</td><td>Credo sia tardi.</td></tr>
+          <tr><td rowspan="3"><strong>implicita</strong></td><td>preposizione o locuzione + infinito</td><td>di, a, per, prima di</td><td>Ho deciso <span class="hook">di</span> partire.</td></tr>
+          <tr><td>congiunzione + gerundio o infinito</td><td>pur, quando, come</td><td><span class="hook">Pur</span> conoscendo la strada, si è perso.</td></tr>
+          <tr><td>nessun connettivo: basta il modo indefinito</td><td>—</td><td><span class="hook">Tornando</span> a casa, ho incontrato Sara.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mt"><strong>Un consiglio di stile:</strong> quando il soggetto della subordinata è lo stesso della reggente, si preferisce la forma implicita. <em>Ho capito di aver sbagliato</em> suona meglio di <em>Ho capito che ho sbagliato</em>.</p>
+  </section>
+
+  <!-- 2.8 -->
+  <section class="step" data-cap="2" data-t="I gradi">
+    <p class="eyebrow">Il grado di subordinazione</p>
+    <h2>Un gradino, due gradini</h2>
+    <p class="lead">Ogni nuovo livello di dipendenza è un grado. Le subordinate di <strong>1° grado</strong> dipendono dalla principale o da una sua coordinata; quelle di <strong>2° grado</strong> da una subordinata di 1° grado; e così via.</p>
+    <div class="grid g2w">
+      <div class="card"><span class="tag n">1 · una catena</span>
+        <p class="periodo sm" style="margin-bottom:.8rem">Ti avrei chiamato se avessi saputo che eri a casa.</p>
+        <div class="gradini">
+          <div class="row"><div class="blk m"><span class="lbl">principale</span><span class="txt">Ti avrei chiamato</span></div></div>
+          <div class="row ind1"><div class="elbow" aria-hidden="true"></div><div class="blk s"><span class="lbl">1° grado</span><span class="txt">se avessi saputo</span></div></div>
+          <div class="row ind2"><div class="elbow" aria-hidden="true"></div><div class="blk s"><span class="lbl">2° grado</span><span class="txt">che eri a casa</span></div></div>
+        </div></div>
+      <div class="card"><span class="tag n">2 · una catena con una coordinata</span>
+        <p class="periodo sm" style="margin-bottom:.8rem">Ti avrei chiamato se avessi saputo che eri a casa e che stavi meglio.</p>
+        <div class="gradini">
+          <div class="row"><div class="blk m"><span class="lbl">principale</span><span class="txt">Ti avrei chiamato</span></div></div>
+          <div class="row ind1"><div class="elbow" aria-hidden="true"></div><div class="blk s"><span class="lbl">1° grado</span><span class="txt">se avessi saputo</span></div></div>
+          <div class="row ind2"><div class="elbow" aria-hidden="true"></div><div class="blk s"><span class="lbl">2° grado</span><span class="txt">che eri a casa</span></div>
+            <span class="join">e</span><div class="blk s"><span class="lbl">coordinata · 2° grado</span><span class="txt">che stavi meglio</span></div></div>
+        </div></div>
+      <div class="card"><span class="tag n">3 · due subordinate dalla stessa reggente</span>
+        <p class="periodo sm" style="margin-bottom:.8rem">Ho capito subito, appena ti ho visto, che eri preoccupato.</p>
+        <div class="gradini">
+          <div class="row"><div class="blk m"><span class="lbl">principale</span><span class="txt">Ho capito subito</span></div></div>
+          <div class="row ind1"><div class="elbow" aria-hidden="true"></div><div class="blk s"><span class="lbl">1° grado</span><span class="txt">appena ti ho visto</span></div>
+            <div class="blk s"><span class="lbl">1° grado</span><span class="txt">che eri preoccupato</span></div></div>
+        </div>
+        <p class="soft mt">Sono tutte e due di 1° grado perché dipendono entrambe dalla principale, non perché siano coordinate.</p></div>
+      <div class="card"><span class="tag n">4 · una subordinata della coordinata</span>
+        <p class="periodo sm" style="margin-bottom:.8rem">Mi ha detto che arriva domani, ma io non credo che ce la faccia.</p>
+        <div class="gradini">
+          <div class="row"><div class="blk m"><span class="lbl">principale</span><span class="txt">Mi ha detto</span></div>
+            <span class="join">ma</span><div class="blk c"><span class="lbl">coordinata alla principale</span><span class="txt">io non credo</span></div></div>
+          <div class="row ind1"><div class="elbow" aria-hidden="true"></div><div class="blk s"><span class="lbl">1° grado · dalla principale</span><span class="txt">che arriva domani</span></div>
+            <div class="elbow" aria-hidden="true"></div><div class="blk s"><span class="lbl">1° grado · dalla coordinata</span><span class="txt">che ce la faccia</span></div></div>
+        </div></div>
+    </div>
+  </section>
+
+  <!-- 2.9 -->
+  <section class="step" data-cap="2" data-t="La funzione">
+    <p class="eyebrow">La funzione delle subordinate</p>
+    <h2>Una subordinata è un complemento allargato</h2>
+    <p class="lead">Una subordinata funziona come un complemento trasformato in frase: <em>Chiudo la finestra <mark class="c">per il rumore</mark></em> → <em>Chiudo la finestra <mark>perché c'è rumore</mark></em>. Può fare da argomento, da circostante o da espansione.</p>
+    <div class="card"><p class="periodo">Ho promesso <mark>di restituire il libro</mark> <mark>che mi hai prestato</mark> <mark>appena l'avrò finito</mark>.</p></div>
+    <div class="grid g3 mt">
+      <div class="card"><span class="tag s">argomento · completive</span>
+        <p><em>di restituire il libro</em> completa il verbo <em>ho promesso</em>, come farebbe un complemento oggetto.</p>
+        <p class="soft">= Ho promesso <strong>la restituzione del libro</strong>.</p></div>
+      <div class="card"><span class="tag s">circostante · relative</span>
+        <p><em>che mi hai prestato</em> si lega al nome <em>libro</em>, come farebbe un aggettivo.</p>
+        <p class="soft">= il libro <strong>prestato</strong>.</p></div>
+      <div class="card"><span class="tag s">espansione · avverbiali</span>
+        <p><em>appena l'avrò finito</em> aggiunge una circostanza a tutto l'evento, come un complemento di tempo.</p>
+        <p class="soft">= <strong>dopo la lettura</strong>.</p></div>
+    </div>
+  </section>
+
+  <!-- 2.10 -->
+  <section class="step" data-cap="2" data-t="Esercitazione">
+    <p class="eyebrow">Esercitati</p>
+    <h2>Coordinata o subordinata?</h2>
+    <p class="lead">Per ogni frase in grassetto scegli. La risposta mostra anche la reggente e il collegamento.</p>
+    <div class="score"><span>Prima risposta giusta:</span><span class="big" id="sc2">0</span><span>su <span id="sct2">0</span> svolte</span><button class="probe" id="reset2" type="button">Ricomincia</button></div>
+    <div class="vf mt" id="ex2"></div>
+  </section>
+
+  <!-- 2.11 -->
+  <section class="step" data-cap="2" data-t="Quaderno">
+    <p class="eyebrow">Ripasso</p>
+    <h2>Sul quaderno</h2>
+    <div class="card">
+      <ol style="margin:.3rem 0 0;padding-left:1.3rem;font-size:1.05em;line-height:1.7">
+        <li><strong>Coordinazione</strong> (paratassi): due frasi sullo stesso piano, legate da una congiunzione coordinante o da un segno di punteggiatura. La coordinata viene sempre dopo la frase a cui è collegata.</li>
+        <li><strong>Subordinazione</strong> (ipotassi): una frase dipende da una reggente; la aggancia una congiunzione, una preposizione, un pronome o un verbo di modo indefinito. Può stare prima o dopo.</li>
+        <li><strong>Reggente</strong>: la frase da cui un'altra dipende o a cui un'altra è coordinata. La principale è la reggente che non dipende da nessuna.</li>
+        <li><strong>Gradi</strong>: 1° grado se dipende dalla principale o da una sua coordinata; 2° grado se dipende da una subordinata di 1° grado.</li>
+      </ol>
+    </div>
+  </section>
+
+</div>
+
+<div class="bar">
+  <div class="inner">
+    <button class="nav" id="prev">← Indietro</button>
+    <button class="nav" id="next">Avanti →</button>
+    <div class="dots" id="dots"></div>
+    <span class="counter" id="counter"></span>
   </div>
 </div>
 
 <script>
-(function () {
-  /* ---------- tabs ---------- */
-  const tabs = { s1: ['t-s1', 'p-s1'], s2: ['t-s2', 'p-s2'], lab: ['t-lab', 'p-lab'] };
-  function show(k) {
-    Object.entries(tabs).forEach(([key, [t, p]]) => {
-      document.getElementById(t).setAttribute('aria-selected', String(key === k));
-      document.getElementById(p).hidden = key !== k;
-    });
-    try { history.replaceState(null, '', '#' + k); } catch (e) {}
-    window.scrollTo({ top: 0 });
-  }
-  Object.entries(tabs).forEach(([k, [t]]) => document.getElementById(t).addEventListener('click', () => show(k)));
-  document.querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => show(b.dataset.goto)));
-  const h = location.hash.slice(1); if (tabs[h]) show(h);
+(function(){
+  "use strict";
 
-  /* ---------- static diagrams (built from data so they stay consistent) ---------- */
-  const esc = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
-  const cl = (role, label, text, o = {}) => `<div class="cl ${role}${o.heavy ? ' heavy' : ''}"${o.w ? ` style="width:${o.w}px"` : ''}><span class="lb">${esc(label)}</span><span class="tx">${esc(text)}</span></div>`;
-  const conn = t => `<span class="conn">${t}</span>`;
-  const hooked = (inner, ml, hh, mt) => `<div class="row hooked" style="margin-left:${ml}px"><div class="hk"${hh ? ` style="height:${hh}px;margin-top:${mt}px"` : ''} aria-hidden="true"></div>${inner}</div>`;
-  const put = (id, html) => { document.getElementById(id).innerHTML = html; };
-
-  put('d-coord', cl('main', 'principale', 'La gatta si arrampica sugli alberi') + conn('e') + cl('coord', 'coordinata', 'rincorre le farfalle'));
-  put('d-sub', `<div>${cl('main', 'principale · reggente', 'La gatta si arrampica sugli alberi')}</div>` + hooked(cl('sub', 'subordinata · dipendente', 'per rincorrere le farfalle'), 24));
-  put('d-both1', `<div>${cl('main', 'principale', 'Mi preparo')}</div>` + hooked(cl('sub', 'subordinata · dipendente e reggente', 'per venirti a prendere', { heavy: true }) + conn('e') + cl('sub', 'subordinata coordinata', 'andare al cinema'), 24));
-  put('d-both2', `<div class="row">${cl('main', 'principale', 'Preparo la cena', { w: 150 })}${conn('e')}${cl('coord', 'coordinata · reggente', 'guardo la televisione', { heavy: true })}</div>` + hooked(cl('sub', 'subordinata', "perché c'è il festival di Sanremo"), 218));
-  put('d-par', `<div>${cl('main', 'principale · reggente', 'Gino pulisce le vetrine')}</div>` + hooked(cl('sub', 'subordinata · 1° grado', 'quando è mattina presto'), 24) + hooked(cl('sub', 'subordinata · 1° grado', 'prima di aprire'), 24, 94, -68));
-  put('d-chain', `<div>${cl('main', 'principale · reggente', 'Mi sbrigo')}</div>` + hooked(cl('sub', '1° grado · dipendente e reggente', "per prendere l'autobus", { heavy: true }), 24) + hooked(cl('sub', 'subordinata · 2° grado', 'per andare a scuola'), 72));
-
-  /* ---------- laboratory ---------- */
-  const isCoord = c => c.role === 'coord' || c.role === 'subcoord';
-  const isSub = c => c.role === 'sub' || c.role === 'subcoord';
-  const ROLE_LABEL = { main: 'principale', coord: 'coordinata', sub: 'subordinata', subcoord: 'subordinata coordinata' };
-  const COORD_FIRST = 'Una coordinata non può aprire il periodo: ha bisogno della frase a cui è legata. Con il connettivo in testa il periodo è sgrammaticato.';
-
-  const EX = [
-    {
-      title: 'Una subordinata si sposta', task: 'Porta «quando arrivi» all\'inizio del periodo. Poi prova a rimettere le frasi come prima.',
-      chunks: [
-        { id: 'a', t: 'chiamami', role: 'main' },
-        { id: 'b', t: 'quando arrivi', role: 'sub', dep: 'a' }
-      ],
-      valid: ['ab', 'ba'],
-      okMsg: { default: 'Va bene: la subordinata può stare prima o dopo la sua reggente. Se la metti in testa, si mette una virgola.' },
-      badMsg: ''
-    },
-    {
-      title: 'Una coordinata non si sposta', task: 'Prova a portare «e vedrai» all\'inizio. Che cosa succede?',
-      chunks: [
-        { id: 'a', t: 'provaci', role: 'main' },
-        { id: 'b', t: 'e vedrai', role: 'coord', dep: 'a' }
-      ],
-      valid: ['ab'],
-      okMsg: {},
-      badMsg: COORD_FIRST
-    },
-    {
-      title: 'La subordinata e la sua coordinata', task: 'Trova gli ordini che funzionano. Attenzione: «e andare al cinema» è legata a «per venirti a prendere».',
-      chunks: [
-        { id: 'a', t: 'mi preparo', role: 'main' },
-        { id: 'b', t: 'per venirti a prendere', role: 'sub', dep: 'a', lb: 'subordinata · dipendente e reggente' },
-        { id: 'c', t: 'e andare al cinema', role: 'subcoord', dep: 'b', lb: 'subordinata coordinata' }
-      ],
-      valid: ['abc', 'bca'],
-      okMsg: { bca: 'Va bene: la subordinata si sposta insieme alla sua coordinata, come un blocco unico.' },
-      notes: {
-        bac: { kind: 'bad', msg: 'Il blocco è stato spezzato: «e andare al cinema» è rimasta staccata dalla frase a cui è coordinata.' },
-        acb: { kind: 'bad', msg: '«e andare al cinema» deve seguire la frase a cui è coordinata, non precederla.' }
-      },
-      badMsg: '«per venirti a prendere» e «e andare al cinema» formano un blocco: si spostano solo insieme, e la coordinata segue sempre la sua frase.'
-    },
-    {
-      title: 'La catena', task: 'La frase di 2° grado dipende da quella di 1° grado. Quali ordini mantengono il periodo corretto e con lo stesso significato?',
-      chunks: [
-        { id: 'a', t: 'mi sbrigo', role: 'main' },
-        { id: 'b', t: 'per prendere l\'autobus', role: 'sub', dep: 'a', lb: '1° grado · dipendente e reggente' },
-        { id: 'c', t: 'per andare a scuola', role: 'sub', dep: 'b', lb: 'subordinata · 2° grado' }
-      ],
-      valid: ['abc', 'bca'],
-      okMsg: { bca: 'Va bene: la catena si sposta tutta insieme, nello stesso ordine.' },
-      notes: {
-        bac: { kind: 'changes', msg: 'Il periodo è corretto, ma ora «per andare a scuola» si aggancia a «mi sbrigo»: è diventata di 1° grado e il significato è cambiato.' },
-        acb: { kind: 'changes', msg: 'La frase si legge, ma la catena è rovesciata: ora «per prendere l\'autobus» dipende da «per andare a scuola». Il significato non è più lo stesso.' }
-      },
-      badMsg: '«per andare a scuola» dipende da «per prendere l\'autobus»: la dipendente di 2° grado deve restarle vicino, dopo di lei.'
-    },
-    {
-      title: 'Due dipendenti in parallelo', task: 'Le due subordinate dipendono ognuna dalla reggente. Prova a disporle in tutti i modi: quanti ne trovi?',
-      chunks: [
-        { id: 'a', t: 'Gino pulisce le vetrine', role: 'main' },
-        { id: 'b', t: 'quando è mattina presto', role: 'sub', dep: 'a', lb: 'subordinata · 1° grado' },
-        { id: 'c', t: 'prima di aprire', role: 'sub', dep: 'a', lb: 'subordinata · 1° grado' }
-      ],
-      valid: 'all',
-      okMsg: { default: 'Va bene: ogni dipendente si aggancia per conto proprio alla reggente, quindi può stare prima, dopo o intorno a lei.' },
-      badMsg: ''
-    },
-    {
-      title: 'Una coordinata che regge', task: 'La causale dipende da «guardo la televisione», che a sua volta è coordinata alla prima frase. Che cosa si può spostare?',
-      chunks: [
-        { id: 'a', t: 'preparo la cena', role: 'main' },
-        { id: 'b', t: 'e guardo la televisione', role: 'coord', dep: 'a', lb: 'coordinata · reggente' },
-        { id: 'c', t: 'perché c\'è il festival di Sanremo', role: 'sub', dep: 'b' }
-      ],
-      valid: ['abc'],
-      okMsg: {},
-      notes: {
-        acb: { kind: 'changes', msg: 'Il periodo è corretto, ma ora la causale si aggancia a «preparo la cena»: il legame con «guardo la televisione» si è perso.' },
-        cab: { kind: 'changes', msg: 'Il periodo è corretto, ma la causale ora sembra riferirsi a entrambe le azioni: non dipende più da «guardo la televisione».' }
-      },
-      badMsg: 'La coordinata «e guardo la televisione» non si stacca dalla frase a cui è legata, e la sua causale deve restarle accanto.'
-    },
-    {
-      title: 'La reggente non sta sempre all\'inizio', task: 'Qui la dipendente è implicita (verbo al gerundio). Può stare prima della reggente?',
-      chunks: [
-        { id: 'a', t: 'Silvia ha aperto la porta', role: 'main' },
-        { id: 'b', t: 'avendo sentito bussare', role: 'sub', dep: 'a', lb: 'subordinata implicita' }
-      ],
-      valid: ['ab', 'ba'],
-      okMsg: { default: 'Va bene: la dipendente implicita può stare prima della reggente. Con la subordinata in testa, la virgola è d\'obbligo.' },
-      badMsg: ''
-    }
+  // ---- esercitazione a clic ----
+  // ogni periodo: segmenti [testo, indice frase]; p = indice della principale; why[k] = spiegazione per la frase k
+  var periodi = [
+    { s:[["Ho chiuso la finestra",0],["perché entrava freddo.",1]], p:0,
+      why:["", "Ha un gancio: «perché». Dipende da «ho chiuso la finestra»."],
+      ok:"Nessun gancio, verbo all'indicativo." },
+    { s:[["Quando suona la campanella,",0],["gli studenti escono.",1]], p:1,
+      why:["Ha un gancio: «quando». È la prima frase, ma dipende dall'altra.", ""],
+      ok:"Non è la prima frase, eppure è la principale." },
+    { s:[["Credo",0],["che domani nevicherà.",1]], p:0,
+      why:["", "Ha un gancio: «che». Contiene la notizia, ma dipende da «credo»."],
+      ok:"Breve e monca, ma regge l'altra frase: la dipendente occupa il posto dell'oggetto di «credo»." },
+    { s:[["Uscendo di casa,",0],["ho dimenticato le chiavi.",1]], p:1,
+      why:["Il gancio è il verbo stesso: «uscendo» è un gerundio, modo indefinito.", ""],
+      ok:"Nessun gancio, verbo all'indicativo." },
+    { s:[["Il treno,",0],["che doveva arrivare alle otto,",1],["è in ritardo.",0]], p:0,
+      why:["", "Ha un gancio: «che» relativo. Si aggancia al nome «treno»."],
+      ok:"La principale è spezzata dall'inciso: «Il treno … è in ritardo»." },
+    { s:[["Dimmi",0],["che cosa è successo.",1]], p:0,
+      why:["", "«Che cosa» qui introduce una domanda indiretta: dipende da «dimmi»."],
+      ok:"Una principale all'imperativo." },
+    { s:[["Se avessi tempo,",0],["verrei con voi",1],["e porterei la chitarra.",2]], p:1,
+      why:["Ha un gancio: «se». È la condizione da cui dipendono le altre.", "", "Non ha gancio, ma è unita da «e» alla frase precedente: è la coordinata alla principale, sullo stesso gradino. La principale è la prima delle due."],
+      ok:"Principale al condizionale; «e porterei la chitarra» è la sua coordinata." },
+    { s:[["Bisogna",0],["che tu ti decida",1],["prima che sia troppo tardi.",2]], p:0,
+      why:["", "Ha un gancio: «che». Fa da soggetto di «bisogna».", "Ha un gancio: «prima che». Dipende da «che tu ti decida»."],
+      ok:"Monca, ma è la principale: la completiva le fa da soggetto." },
+    { s:[["Per non perdere l'autobus,",0],["Marta,",1],["che abita lontano,",2],["esce di casa alle sette.",1]], p:1,
+      why:["Ha due indizi: «per» e l'infinito «perdere». Dipende.", "", "Ha un gancio: «che» relativo. Si aggancia al nome «Marta»."],
+      ok:"Spezzata dalla relativa: «Marta … esce di casa alle sette»." },
+    { s:[["Mi domando",0],["perché Luca non abbia risposto al messaggio",1],["che gli ho mandato ieri.",2]], p:0,
+      why:["", "Qui «perché» introduce una domanda indiretta: dipende da «mi domando».", "Ha un gancio: «che» relativo. Si aggancia al nome «messaggio»."],
+      ok:"Nessun gancio. Il «perché» della frase dopo non è causale: introduce una domanda indiretta." }
   ];
-
-  const perms = a => a.length <= 1 ? [a] : a.flatMap((x, i) => perms([...a.slice(0, i), ...a.slice(i + 1)]).map(p => [x, ...p]));
-  EX.forEach(ex => {
-    ex.start = ex.chunks.map(c => c.id).join('');
-    ex.all = perms(ex.chunks.map(c => c.id)).map(p => p.join(''));
-    ex.validList = ex.valid === 'all' ? ex.all.slice() : ex.valid.slice();
-    ex.notes = ex.notes || {};
-  });
-
-  const get = (ex, id) => ex.chunks.find(c => c.id === id);
-  function sep(x, y) {
-    if (isCoord(y)) return ' ';
-    if (y.dep === x.id) return ' ';
-    if (isSub(x) || (isCoord(x) && y.role === 'main')) return ',';
-    return ' ';
-  }
-  function sentence(ex, key) {
-    const ch = key.split('').map(id => get(ex, id));
-    let s = '';
-    ch.forEach((c, i) => { if (i) { const sp = sep(ch[i - 1], c); s += sp === ',' ? ', ' : ' '; } s += c.t; });
-    return s.charAt(0).toUpperCase() + s.slice(1) + '.';
-  }
-  function judge(ex, key) {
-    if (ex.validList.includes(key)) {
-      const msg = key === ex.start ? 'Ordine di partenza: il periodo regge.' : (ex.okMsg[key] || ex.okMsg.default || 'Va bene: il periodo regge.');
-      return { kind: 'ok', msg };
-    }
-    if (ex.notes[key]) return ex.notes[key];
-    const first = get(ex, key[0]);
-    if (isCoord(first)) return { kind: 'bad', msg: COORD_FIRST };
-    return { kind: 'bad', msg: ex.badMsg || 'Il periodo non regge: controlla chi dipende da chi.' };
-  }
-
-  const state = EX.map(ex => ({ order: ex.start.split(''), found: new Set([ex.start]), tried: new Set([ex.start]), last: null, done: false, revealed: false }));
-  let cur = 0, showRoles = true;
-
-  const $ = id => document.getElementById(id);
-  const tray = $('tray');
-
-  function renderPills() {
-    $('pills').innerHTML = '';
-    EX.forEach((ex, i) => {
-      const b = document.createElement('button');
-      b.type = 'button'; b.className = 'pill' + (state[i].done ? ' done' : '');
-      b.setAttribute('aria-pressed', String(i === cur));
-      b.innerHTML = `<span class="ck" aria-hidden="true">${state[i].done ? '✓' : i + 1}</span><span>Esercizio ${i + 1}</span>`;
-      if (state[i].done) b.setAttribute('aria-label', `Esercizio ${i + 1}, completato`);
-      b.addEventListener('click', () => { cur = i; renderAll(); });
-      $('pills').appendChild(b);
+  var ex = document.getElementById('ex');
+  var sc = document.getElementById('sc'), sct = document.getElementById('sct');
+  var good = 0, done = 0;
+  function buildEx(){
+    ex.innerHTML = ''; good = 0; done = 0; sc.textContent = '0'; sct.textContent = '0';
+    periodi.forEach(function(p, n){
+      var el = document.createElement('div');
+      el.className = 'item';
+      var head = document.createElement('span');
+      head.className = 'num'; head.textContent = 'periodo ' + (n+1);
+      var line = document.createElement('p');
+      line.className = 'periodo sm';
+      var fb = document.createElement('div');
+      fb.className = 'fb'; fb.hidden = true;
+      var state = { first:true, solved:false };
+      p.s.forEach(function(seg, k){
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'seg'; b.textContent = seg[0];
+        b.setAttribute('data-f', seg[1]);
+        b.addEventListener('click', function(){
+          if (state.solved) return;
+          var f = seg[1];
+          if (f === p.p){
+            state.solved = true;
+            Array.prototype.forEach.call(line.querySelectorAll('.seg'), function(x){
+              if (+x.getAttribute('data-f') === p.p) x.classList.add('hit');
+              x.disabled = true;
+            });
+            fb.className = 'fb ok'; fb.hidden = false;
+            fb.innerHTML = '<strong>Giusto.</strong> ' + p.ok;
+            done++; if (state.first) good++;
+            sc.textContent = String(good); sct.textContent = String(done);
+          } else {
+            state.first = false;
+            Array.prototype.forEach.call(line.querySelectorAll('.seg'), function(x){
+              if (+x.getAttribute('data-f') === f) x.classList.add('miss');
+            });
+            fb.className = 'fb ko'; fb.hidden = false;
+            fb.innerHTML = '<strong>Non è la principale.</strong> ' + p.why[f] + ' Riprova.';
+          }
+        });
+        line.appendChild(b);
+        if (k < p.s.length - 1) line.appendChild(document.createTextNode(' '));
+      });
+      el.appendChild(head); el.appendChild(line); el.appendChild(fb);
+      ex.appendChild(el);
     });
   }
+  buildEx();
+  document.getElementById('reset').addEventListener('click', buildEx);
 
-  function renderTray(focusId) {
-    const ex = EX[cur], st = state[cur];
-    tray.className = 'tray ' + (showRoles ? 'roles-on' : 'roles-off');
-    tray.innerHTML = '';
-    st.order.forEach(id => {
-      const c = get(ex, id);
-      const el = document.createElement('div');
-      el.className = `chip ${showRoles ? c.role : ''}${showRoles && (c.lb || '').includes('reggente') && c.lb.includes('dipendente') ? ' heavy-lb' : ''}`;
-      el.dataset.id = id; el.tabIndex = 0; el.setAttribute('role', 'listitem');
-      el.setAttribute('aria-label', `${c.t}. Posizione ${st.order.indexOf(id) + 1} di ${st.order.length}`);
-      el.innerHTML = `<span class="lb">${esc(c.lb || ROLE_LABEL[c.role])}</span><span class="tx">${esc(c.t)}</span>`;
-      tray.appendChild(el);
-      if (id === focusId) setTimeout(() => el.focus(), 0);
+  // ---- vero o falso ----
+  var vf = [
+    { t:"La principale è sempre la prima frase del periodo.", v:false, w:"Falso. «Uscendo di casa, ho dimenticato le chiavi»: la principale è la seconda." },
+    { t:"La principale ha sempre senso compiuto da sola.", v:false, w:"Falso. «Credo», «Bisogna», «Spero» sono principali che hanno bisogno della frase che segue." },
+    { t:"La principale non ha congiunzioni subordinanti né pronomi relativi davanti a sé.", v:true, w:"Vero. Se una frase ha un gancio, dipende da un'altra." },
+    { t:"Un «perché» all'inizio della frase indica sempre una subordinata.", v:false, w:"Falso. «Perché non hai risposto?» è una principale interrogativa: qui «perché» non aggancia la frase a nessun'altra." },
+    { t:"In un periodo possono esserci due frasi senza gancio.", v:true, w:"Vero. «Ho chiuso la finestra e ho acceso il riscaldamento»: la principale e la sua coordinata." },
+    { t:"La principale contiene sempre l'informazione più importante.", v:false, w:"Falso. In «Credo che domani nevicherà» la notizia sta nella subordinata." }
+  ];
+  var vfbox = document.getElementById('vf');
+  vf.forEach(function(q){
+    var row = document.createElement('div'); row.className = 'vfitem';
+    var txt = document.createElement('p'); txt.style.margin = '0'; txt.textContent = q.t;
+    var btns = document.createElement('div'); btns.className = 'btns';
+    var why = document.createElement('p'); why.className = 'why'; why.hidden = true; why.textContent = q.w;
+    [['Vero',true],['Falso',false]].forEach(function(o){
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'vfbtn'; b.textContent = o[0];
+      b.addEventListener('click', function(){
+        Array.prototype.forEach.call(btns.children, function(x){ x.classList.remove('right','wrong'); });
+        b.classList.add(o[1] === q.v ? 'right' : 'wrong');
+        why.hidden = false;
+      });
+      btns.appendChild(b);
+    });
+    row.appendChild(txt); row.appendChild(btns); row.appendChild(why);
+    vfbox.appendChild(row);
+  });
+
+  // ---- apri/chiudi ----
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('.probe[data-rev]');
+    if (!b) return;
+    var box = document.getElementById(b.getAttribute('data-rev'));
+    if (!box) return;
+    var open = box.hidden;
+    box.hidden = !open;
+    b.setAttribute('aria-expanded', String(open));
+  });
+
+  // ---- esercitazione capitolo 2 ----
+  var cs = [
+    { pre:"Ho chiamato Sara ", b:"e le ho raccontato tutto", post:".", a:"c",
+      w:"Coordinata alla principale «Ho chiamato Sara». Collegamento: «e», congiunzione copulativa." },
+    { pre:"Ho chiamato Sara ", b:"per raccontarle tutto", post:".", a:"s",
+      w:"Subordinata implicita di «Ho chiamato Sara». Collegamento: la preposizione «per» con l'infinito." },
+    { pre:"Era tardi, ", b:"perciò siamo tornati a casa", post:".", a:"c",
+      w:"Coordinata alla principale «Era tardi». Collegamento: «perciò», congiunzione conclusiva." },
+    { pre:"", b:"Siccome era tardi", post:", siamo tornati a casa.", a:"s",
+      w:"Subordinata di «siamo tornati a casa». Viene prima, ma dipende. Collegamento: «siccome»." },
+    { pre:"Il film ", b:"che abbiamo visto", post:" era noioso.", a:"s",
+      w:"Subordinata relativa: si aggancia al nome «film» della principale «Il film … era noioso». Collegamento: il pronome relativo «che»." },
+    { pre:"Non solo ha vinto, ", b:"ma ha anche battuto il record", post:".", a:"c",
+      w:"Coordinata correlativa alla principale «Non solo ha vinto». Collegamento: «non solo… ma anche»." },
+    { pre:"Ci vediamo per studiare ", b:"oppure per guardare un film", post:".", a:"c",
+      w:"Coordinata alla subordinata «per studiare»: le due finali sono sullo stesso piano. Collegamento: «oppure», congiunzione disgiuntiva." },
+    { pre:"Credo ", b:"sia arrivato il momento", post:".", a:"s",
+      w:"Subordinata esplicita di «Credo», senza connettivo: la dipendenza si vede dal congiuntivo." }
+  ];
+  var ex2 = document.getElementById('ex2');
+  var sc2 = document.getElementById('sc2'), sct2 = document.getElementById('sct2');
+  var good2 = 0, done2 = 0;
+  function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+  function buildEx2(){
+    ex2.innerHTML = ''; good2 = 0; done2 = 0; sc2.textContent = '0'; sct2.textContent = '0';
+    cs.forEach(function(q, n){
+      var row = document.createElement('div'); row.className = 'vfitem';
+      var txt = document.createElement('p'); txt.style.margin = '0';
+      txt.innerHTML = (n+1) + '. ' + esc(q.pre) + '<strong>' + esc(q.b) + '</strong>' + esc(q.post);
+      var btns = document.createElement('div'); btns.className = 'btns';
+      var why = document.createElement('p'); why.className = 'why'; why.hidden = true;
+      var st = { first:true, done:false };
+      [['Coordinata','c'],['Subordinata','s']].forEach(function(o){
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'vfbtn'; b.textContent = o[0];
+        b.addEventListener('click', function(){
+          if (st.done) return;
+          var ok = (o[1] === q.a);
+          b.classList.add(ok ? 'right' : 'wrong');
+          why.hidden = false;
+          if (ok){
+            st.done = true; done2++; if (st.first) good2++;
+            sc2.textContent = String(good2); sct2.textContent = String(done2);
+            why.textContent = q.w;
+          } else {
+            st.first = false;
+            why.textContent = 'Non è così: riprova.';
+          }
+        });
+        btns.appendChild(b);
+      });
+      row.appendChild(txt); row.appendChild(btns); row.appendChild(why);
+      ex2.appendChild(row);
     });
   }
+  buildEx2();
+  document.getElementById('reset2').addEventListener('click', buildEx2);
 
-  function renderDeps() {
-    const ex = EX[cur], box = $('deps');
-    box.hidden = !showRoles;
-    if (!showRoles) return;
-    const items = ex.chunks.filter(c => c.dep).map(c => `<li>«${esc(c.t)}» ${isCoord(c) ? 'è coordinata a' : 'dipende da'} «${esc(get(ex, c.dep).t)}»</li>`);
-    box.innerHTML = `<b>Chi dipende da chi</b><ul>${items.join('')}</ul>`;
-  }
+  // ---- testo con i collegamenti ----
+  var sl = document.getElementById('showlinks'), passage = document.getElementById('passage');
+  sl.addEventListener('click', function(){
+    var on = passage.classList.toggle('on');
+    sl.setAttribute('aria-pressed', String(on));
+    sl.textContent = on ? 'Nascondi i collegamenti' : 'Mostra i collegamenti nel testo';
+  });
 
-  function renderResult() {
-    const ex = EX[cur], st = state[cur], key = st.order.join('');
-    const j = judge(ex, key), s = sentence(ex, key);
-    $('sentence').innerHTML = (j.kind === 'bad' ? '<span class="star" title="periodo sgrammaticato">*</span>' : '') + esc(s);
-    const v = $('verdict');
-    if (!st.last) { v.className = 'verdict idle'; v.innerHTML = '<span class="badge">Prova</span><span>Sposta una frase per vedere se il periodo regge.</span>'; }
-    else {
-      const label = { ok: 'Va', bad: 'Sgrammaticato', changes: 'Cambia significato' }[j.kind];
-      v.className = 'verdict ' + j.kind; v.innerHTML = `<span class="badge">${label}</span><span>${esc(j.msg)}</span>`;
-    }
-  }
-
-  function renderFound() {
-    const ex = EX[cur], st = state[cur], n = ex.validList.length, f = st.found.size;
-    $('foundTitle').textContent = n === 1 ? (f ? 'Ordini che funzionano: 1 di 1 — c\'è solo quello di partenza. Provane altri per convincertene.' : '') : `Ordini che funzionano: ${f} di ${n}`;
-    $('bar').style.width = (f / n * 100) + '%';
-    const ul = $('foundList'); ul.innerHTML = '';
-    ex.validList.forEach(k => {
-      const li = document.createElement('li');
-      if (st.found.has(k)) li.innerHTML = esc(sentence(ex, k)); else { li.className = 'slot'; li.textContent = 'Ancora da trovare…'; }
-      ul.appendChild(li);
+  // ---- navigazione per capitoli ----
+  var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
+  var dots = document.getElementById('dots'), counter = document.getElementById('counter');
+  var prev = document.getElementById('prev'), next = document.getElementById('next');
+  var capBtns = Array.prototype.slice.call(document.querySelectorAll('.cap'));
+  var i = 0, shownCap = null;
+  function capOf(k){ return steps[k].getAttribute('data-cap'); }
+  function stepsOf(c){ var a = []; steps.forEach(function(s, k){ if (capOf(k) === c) a.push(k); }); return a; }
+  function buildDots(c){
+    dots.innerHTML = '';
+    stepsOf(c).forEach(function(k, j){
+      var d = document.createElement('button');
+      d.className = 'dot'; d.type = 'button'; d.textContent = String(j+1);
+      d.title = steps[k].getAttribute('data-t') || '';
+      d.setAttribute('data-k', String(k));
+      d.addEventListener('click', function(){ go(k); });
+      dots.appendChild(d);
     });
-    $('next').hidden = !(st.done && cur < EX.length - 1);
+    shownCap = c;
   }
-
-  function checkDone() {
-    const ex = EX[cur], st = state[cur];
-    const needTry = Math.min(3, ex.all.length);
-    const all = ex.validList.every(k => st.found.has(k));
-    if (!st.done && all && st.tried.size >= needTry) { st.done = true; renderPills(); }
+  function go(n){
+    i = Math.max(0, Math.min(steps.length-1, n));
+    var c = capOf(i);
+    if (c !== shownCap) buildDots(c);
+    steps.forEach(function(s, k){ s.hidden = (k !== i); });
+    Array.prototype.forEach.call(dots.children, function(d){ d.setAttribute('aria-current', String(+d.getAttribute('data-k') === i)); });
+    capBtns.forEach(function(b){ b.setAttribute('aria-current', String(b.getAttribute('data-cap') === c)); });
+    var list = stepsOf(c);
+    prev.disabled = (i === 0); next.disabled = (i === steps.length-1);
+    counter.textContent = 'Cap. ' + c + ' · ' + (list.indexOf(i)+1) + ' / ' + list.length + ' · ' + (steps[i].getAttribute('data-t') || '');
+    try { localStorage.setItem('periodo-passo', String(i)); } catch (e) {}
+    window.scrollTo(0, 0);
   }
-
-  function commit() {
-    const ex = EX[cur], st = state[cur], key = st.order.join('');
-    st.last = key; st.tried.add(key);
-    if (judge(ex, key).kind === 'ok') st.found.add(key);
-    checkDone(); renderResult(); renderFound();
-  }
-
-  function renderAll() {
-    const ex = EX[cur];
-    $('exNum').textContent = `Esercizio ${cur + 1} di ${EX.length}`;
-    $('exTitle').textContent = ex.title; $('exTask').textContent = ex.task;
-    $('solution').hidden = true; $('reveal').textContent = 'Mostra gli ordini possibili';
-    renderPills(); renderTray(); renderDeps(); renderResult(); renderFound();
-  }
-
-  /* ---------- drag & drop (pointer events: mouse, touch, pen) ---------- */
-  let drag = null;
-  tray.addEventListener('pointerdown', e => {
-    const chip = e.target.closest('.chip'); if (!chip || e.button > 0) return;
-    e.preventDefault();
-    const r = chip.getBoundingClientRect();
-    drag = { chip, pid: e.pointerId, gx: e.clientX - r.left, gy: e.clientY - r.top, moved: false };
-    chip.setPointerCapture(e.pointerId); chip.classList.add('drag'); chip.focus({ preventScroll: true });
+  capBtns.forEach(function(b){
+    b.addEventListener('click', function(){ go(stepsOf(b.getAttribute('data-cap'))[0]); });
   });
-  tray.addEventListener('pointermove', e => {
-    if (!drag || e.pointerId !== drag.pid) return;
-    const chip = drag.chip, px = e.clientX, py = e.clientY;
-    chip.style.transform = 'none';
-    for (const s of [...tray.children]) {
-      if (s === chip) continue;
-      const r = s.getBoundingClientRect();
-      if (px > r.left && px < r.right && py > r.top && py < r.bottom) {
-        const kids = [...tray.children];
-        if (kids.indexOf(chip) < kids.indexOf(s)) s.after(chip); else s.before(chip);
-        drag.moved = true; break;
-      }
-    }
-    const b = chip.getBoundingClientRect();
-    chip.style.transform = `translate(${px - drag.gx - b.left}px, ${py - drag.gy - b.top}px)`;
-  });
-  function endDrag(e) {
-    if (!drag || e.pointerId !== drag.pid) return;
-    const chip = drag.chip, moved = drag.moved; drag = null;
-    chip.classList.remove('drag'); chip.style.transform = '';
-    const order = [...tray.children].map(c => c.dataset.id);
-    if (moved && order.join('') !== state[cur].order.join('')) { state[cur].order = order; commit(); renderTray(); }
-  }
-  tray.addEventListener('pointerup', endDrag);
-  tray.addEventListener('pointercancel', endDrag);
-
-  tray.addEventListener('keydown', e => {
-    const chip = e.target.closest('.chip'); if (!chip || (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')) return;
-    e.preventDefault();
-    const o = state[cur].order, i = o.indexOf(chip.dataset.id), j = i + (e.key === 'ArrowLeft' ? -1 : 1);
-    if (j < 0 || j >= o.length) return;
-    [o[i], o[j]] = [o[j], o[i]]; commit(); renderTray(chip.dataset.id);
+  prev.addEventListener('click', function(){ go(i-1); });
+  next.addEventListener('click', function(){ go(i+1); });
+  document.addEventListener('keydown', function(e){
+    if (e.target && /^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(e.target.tagName) && e.key === ' ') return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); go(i+1); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(i-1); }
   });
 
-  /* ---------- controls ---------- */
-  $('roles').addEventListener('change', e => { showRoles = e.target.checked; renderTray(); renderDeps(); });
-  $('reset').addEventListener('click', () => {
-    const ex = EX[cur];
-    state[cur] = { order: ex.start.split(''), found: new Set([ex.start]), tried: new Set([ex.start]), last: null, done: false };
-    renderAll();
+  document.getElementById('tema').addEventListener('click', function(){
+    var cur = document.documentElement.getAttribute('data-theme');
+    var dark = cur === 'dark' || (!cur && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    document.documentElement.setAttribute('data-theme', dark ? 'light' : 'dark');
   });
-  $('reveal').addEventListener('click', () => {
-    const ex = EX[cur], box = $('solution');
-    if (!box.hidden) { box.hidden = true; $('reveal').textContent = 'Mostra gli ordini possibili'; return; }
-    const extra = Object.entries(ex.notes).map(([k, n]) => `<li><b>${n.kind === 'changes' ? 'Cambia significato' : 'No'}</b> · ${esc(sentence(ex, k))} — ${esc(n.msg)}</li>`);
-    box.innerHTML = `<b>Ordini che funzionano</b><ul>${ex.validList.map(k => `<li>${esc(sentence(ex, k))}</li>`).join('')}</ul>` + (extra.length ? `<br><b>Casi particolari</b><ul>${extra.join('')}</ul>` : '');
-    box.hidden = false; $('reveal').textContent = 'Nascondi gli ordini possibili';
-  });
-  $('next').addEventListener('click', () => { cur = Math.min(EX.length - 1, cur + 1); renderAll(); window.scrollTo({ top: 0 }); });
-
-  renderAll();
+  var start = 0;
+  try { var v = parseInt(localStorage.getItem('periodo-passo'), 10); if (v >= 0 && v < steps.length) start = v; } catch (e) {}
+  go(start);
 })();
 </script>
+
 </body>
 </html>
